@@ -29,8 +29,9 @@ class Catalogo:
         """Comparte controles de tipo e identificador duplicado."""
         if not isinstance(objeto, tipo):  # Evita mezclar clientes con servicios u otros objetos.
             raise ValidacionError(f"Se esperaba un objeto {tipo.__name__}.")  # Error controlado.
-        if any(item.identificador == objeto.identificador for item in lista):  # Busca duplicados.
-            raise DuplicadoError("El identificador ya está registrado en este catálogo.")
+        for registrado in lista:  # Revisa uno por uno los objetos guardados.
+            if registrado.identificador == objeto.identificador:  # Compara sus identificadores.
+                raise DuplicadoError("El identificador ya está registrado en este catálogo.")
         lista.append(objeto)  # Guarda el objeto únicamente en memoria.
         logger.info("%s registrado: %s", tipo.__name__, objeto.identificador)  # Confirma alta.
         return objeto  # Permite usar de inmediato el objeto registrado.

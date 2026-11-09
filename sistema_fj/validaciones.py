@@ -23,7 +23,10 @@ def numero(valor, campo, minimo=Decimal("0"), incluir_minimo=False, maximo=None)
     if not resultado.is_finite():  # Impide NaN e infinitos en los cálculos.
         raise ValidacionError(f"{campo}: debe ser finito.")  # Mantiene costos comparables.
     if resultado < minimo or (resultado == minimo and not incluir_minimo):  # Aplica límite inferior.
-        comparador = "mayor o igual que" if incluir_minimo else "mayor que"  # Explica la regla.
+        if incluir_minimo:  # Distingue si se permite un valor igual al límite.
+            comparador = "mayor o igual que"  # Describe un límite que incluye la igualdad.
+        else:  # En los demás casos se exige superar el límite.
+            comparador = "mayor que"  # Describe un límite estricto.
         raise ValidacionError(f"{campo}: debe ser {comparador} {minimo}.")  # Informa el límite.
     if maximo is not None and resultado > maximo:  # Aplica límite superior, si existe.
         raise ValidacionError(f"{campo}: no puede superar {maximo}.")  # Rechaza exceso.

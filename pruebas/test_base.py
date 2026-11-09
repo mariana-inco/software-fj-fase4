@@ -189,6 +189,13 @@ class PruebasBase(unittest.TestCase):
         self.assertEqual(len(catalogo.clientes), 1)  # Solo un cliente fue aceptado.
         self.assertEqual(len(catalogo.servicios), 3)  # Los tres servicios válidos permanecen.
 
+    def test_continuidad_si_falla_descripcion(self):
+        """Un error al describir el resultado tampoco debe detener el recorrido."""
+        with patch.object(self.sala, "describir", side_effect=ValueError("descripción inválida")), \
+                redirect_stdout(io.StringIO()):  # Simula un fallo al presentar el resultado.
+            self.assertFalse(ejecutar_operacion(1, "Descripción fallida", lambda: self.sala))
+            self.assertTrue(ejecutar_operacion(2, "Operación posterior", lambda: "continúa"))
+
 
 if __name__ == "__main__":  # Permite ejecutar este módulo de pruebas de forma directa.
     unittest.main()  # Inicia el ejecutor estándar.

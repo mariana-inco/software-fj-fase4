@@ -55,7 +55,7 @@ trabajo real. No se deben atribuir aportes a personas que no los han realizado.
 - `sistema_fj/excepciones.py`: errores personalizados, incluidos los que puede usar Reserva.
 - `sistema_fj/registro.py`: archivo común de eventos y errores.
 - `sistema_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
-- `pruebas/test_base.py`: 20 pruebas de comportamientos válidos, inválidos y continuidad.
+- `pruebas/test_base.py`: 21 pruebas de comportamientos válidos, inválidos y continuidad.
 - `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
 
 `ReservaSala` es el **tipo de servicio** que alquila una sala. La futura clase

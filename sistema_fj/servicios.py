@@ -154,7 +154,10 @@ class AsesoriaEspecializada(Servicio):
     def validar_parametros(self, tema=None, **otros):
         """Si no se indica tema, utiliza el área de especialidad como tema general."""
         self._validar_disponibilidad(otros)  # Revisa reglas comunes del servicio.
-        asunto = self.especialidad if tema is None else texto(tema, "Tema")  # Valida tema explícito.
+        if tema is None:  # Si no se indicó un tema, usa el área general de la asesoría.
+            asunto = self.especialidad  # La especialidad ya se validó al crear el servicio.
+        else:  # Un tema escrito por el usuario debe pasar por la validación de texto.
+            asunto = texto(tema, "Tema")  # Rechaza temas vacíos o con caracteres de control.
         return {"tema": asunto}  # Entrega el tema que podrá conservar la reserva.
 
     def calcular_costo(self, duracion, impuesto=0, descuento=0, **parametros):
