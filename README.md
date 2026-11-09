@@ -57,6 +57,8 @@ trabajo real. No se deben atribuir aportes a personas que no los han realizado.
 - `sistema_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
 - `pruebas/test_base.py`: 21 pruebas de comportamientos válidos, inválidos y continuidad.
 - `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
+- [Pendientes](colaboracion/PENDIENTES.md): actividades propuestas hasta la entrega.
+- [Bitácora](colaboracion/SEGUIMIENTO.md): avances realizados y evidencias verificables.
 
 `ReservaSala` es el **tipo de servicio** que alquila una sala. La futura clase
 `Reserva` será la operación que relaciona cliente, servicio, duración y estado.
@@ -108,6 +110,10 @@ línea que pide la guía. Cada integrante debe verificar las explicaciones de su
 propios cambios y poder explicar el funcionamiento de forma autónoma.
 
 ## Pendientes para la entrega grupal
+
+La distribución por días está en [PENDIENTES.md](colaboracion/PENDIENTES.md).
+Registrar cada actividad realizada en la [bitácora](colaboracion/SEGUIMIENTO.md)
+y cerrar las casillas únicamente cuando se haya comprobado el resultado.
 
 - Implementar y probar `Reserva`, incluyendo confirmación, cancelación y procesamiento.
 - Integrar al menos 10 operaciones completas: clientes válidos e inválidos,
