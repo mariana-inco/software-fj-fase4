@@ -5,9 +5,11 @@ nuevos sin sustituir clientes, servicios ni sus pruebas.
 
 ## Preparar el entorno de la compañera
 
-Mariana debe dar acceso desde Settings → Collaborators del repositorio privado.
-El usuario de GitHub de la compañera está pendiente de informar; todavía no se
-ha enviado ninguna invitación.
+El repositorio es público: puede consultarse y clonarse sin invitación.
+Para que la compañera suba cambios directamente, Mariana debe darle acceso desde
+Settings → Collaborators. Su usuario de GitHub está pendiente de informar;
+todavía no se ha enviado ninguna invitación. Otra opción es crear una copia
+propia del repositorio y enviar los cambios mediante un pull request.
 
 ```bash
 git clone https://github.com/mariana-inco/software-fj-fase4.git

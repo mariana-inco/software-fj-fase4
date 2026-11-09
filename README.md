@@ -118,6 +118,10 @@ propios cambios y poder explicar el funcionamiento de forma autónoma.
   conclusiones y referencias en normas APA, según la guía.
 - Comprobar novedades del curso y cualquier precisión adicional del tutor.
 
+El repositorio es público para facilitar la revisión del tutor. La compañera
+necesita una invitación como colaboradora para subir cambios directamente;
+también puede contribuir desde una copia propia mediante un pull request.
+
 La guía disponible indica cierre el **22 de noviembre de 2026** y valor de 150
 puntos. No se encontró una rúbrica específica de Fase 4 entre los archivos
 locales; la rúbrica de Fase 2 no se ha utilizado como si fuera la de esta actividad.
