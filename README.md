@@ -1,0 +1,142 @@
+# Software FJ — Fase 4 de Programación (213023)
+
+Proyecto académico de gestión de clientes, servicios y reservas, sin base de datos.
+Este repositorio contiene el **aporte inicial de clientes y servicios**. La clase
+`Reserva` y la simulación integrada del sistema todavía están pendientes.
+
+## Ejecutar el aporte inicial
+
+Desde la carpeta raíz de este repositorio, con Python 3:
+
+```bash
+python3 -m software_fj.demo_base
+python3 -m unittest discover -s tests -v
+```
+
+En Windows puede utilizarse `py` en lugar de `python3`. Solo se usa la biblioteca
+estándar; no hay paquetes que instalar. Validado localmente con Python 3.14.7.
+
+La demostración recorre 16 casos: 7 operaciones aceptadas y 9 rechazadas de forma
+controlada. Termina con un cliente y tres servicios en memoria. Los rechazos son
+intencionales. Esta demostración de componentes **no sustituye las 10 operaciones
+completas del sistema**, que deben incluir reservas exitosas y fallidas.
+
+El registro se crea en `logs/software_fj.log`. Si no se puede abrir el archivo,
+se informa la causa y se registra en consola. Los datos de clientes y servicios
+solo existen en objetos y listas durante la ejecución. No se usa JSON, CSV,
+pickle ni archivos para guardar información del negocio.
+
+## Reparto propuesto entre las dos participantes
+
+La distribución es una propuesta para coordinar a quienes están participando;
+no equivale a una autorización del tutor para modificar el grupo de cinco
+estudiantes que indica el anexo.
+
+- Mariana: `Entidad`, `Cliente`, `Servicio`, sus tres especialidades,
+  catálogo de clientes y servicios, validaciones, excepciones, logs y pruebas de
+  estos componentes. Revisar, entender y ajustar el aporte antes de sustentarlo.
+- Compañera: `Reserva`, estados y transiciones, gestor de reservas en una lista
+  interna, integración, ejecución de al menos 10 operaciones completas con
+  aciertos y errores, y pruebas de reservas. Puede añadir un menú de consola como
+  apoyo; la guía no lo exige expresamente.
+- Ambas: revisión final, comprobación de aportes reales en GitHub y PDF grupal.
+
+Cada participante debe trabajar con su propia cuenta y realizar commits de su
+trabajo real. No se deben atribuir aportes a personas que no los han realizado.
+
+## Organización del código
+
+- `software_fj/entidad.py`: clase abstracta general con identificador de solo lectura.
+- `software_fj/cliente.py`: campos privados, propiedades y validaciones de contacto.
+- `software_fj/servicios.py`: `Servicio` abstracto, `ReservaSala`,
+  `AlquilerEquipo` y `AsesoriaEspecializada`.
+- `software_fj/catalogo.py`: altas y búsquedas en listas privadas de objetos.
+- `software_fj/validaciones.py`: texto, enteros y números finitos.
+- `software_fj/excepciones.py`: errores personalizados, incluidos los que puede usar Reserva.
+- `software_fj/registro.py`: archivo común de eventos y errores.
+- `software_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
+- `tests/test_base.py`: 20 pruebas de comportamientos válidos, inválidos y continuidad.
+- `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
+
+`ReservaSala` es el **tipo de servicio** que alquila una sala. La futura clase
+`Reserva` será la operación que relaciona cliente, servicio, duración y estado.
+
+## Decisiones de diseño que no fija el enunciado
+
+Las tarifas de la demostración son ficticias y se expresan por hora. Los equipos
+se cobran por unidad y hora. Una sala no cambia de precio por número de asistentes.
+Las duraciones pueden ser fraccionarias y deben ser positivas. Se utiliza
+`Decimal` para importes y se redondea al final a dos decimales, con `ROUND_HALF_UP`.
+
+El importe se calcula así:
+
+```text
+tarifa_por_hora × horas × cantidad × (1 − descuento) × (1 + impuesto)
+```
+
+`cantidad` vale uno salvo en equipos. Las tasas se expresan entre cero y uno.
+El impuesto y descuento predeterminados son cero; el 0.19 de la demostración
+es un parámetro de ejemplo, no una regla tributaria del ejercicio.
+
+Las variantes de `calcular_costo` se implementan mediante argumentos opcionales:
+costo simple, con impuesto, con descuento o con ambos. Es la alternativa
+permitida por el ejemplo del anexo. No se simula una sobrecarga de firmas
+redefiniendo varias veces el mismo método: Python conservaría la última definición.
+
+El correo usa una validación básica de formato; no se consulta la existencia del
+buzón. El teléfono admite de 7 a 15 dígitos ASCII y `+` inicial opcional. Los
+identificadores son internos y no corresponden a documentos reales.
+
+La disponibilidad actual es general (`True`/`False`). El calendario, el inventario
+ocupado y las restricciones entre reservas no están implementados. Al integrar,
+debe definirse y documentarse una política consistente para evitar sobreasignación.
+
+## Dónde se evidencia el manejo de excepciones
+
+- `validaciones.numero`: `try/except` y encadenamiento con `raise ... from causa`.
+- `Servicio._calcular_total`: `try/except/else` y error propio de cálculo.
+- `demo_base.ejecutar_operacion`: `try/except/else/finally`, errores de dominio
+  y una captura general en la frontera para registrar fallos imprevistos.
+- `registro.obtener_logger`: recuperación si no puede crearse el archivo.
+
+Los errores propios se registran al construirse. La frontera registra la traza
+de los errores inesperados. Los eventos de creación, registro, costo,
+disponibilidad y finalización de operaciones también quedan en el log.
+
+El código contiene comentarios y docstrings para facilitar la revisión línea por
+línea que pide la guía. Cada integrante debe verificar las explicaciones de sus
+propios cambios y poder explicar el funcionamiento de forma autónoma.
+
+## Pendientes para la entrega grupal
+
+- Implementar y probar `Reserva`, incluyendo confirmación, cancelación y procesamiento.
+- Integrar al menos 10 operaciones completas: clientes válidos e inválidos,
+  servicios válidos e inválidos, reservas exitosas y fallidas, continuación tras errores.
+- Mantener los datos del negocio en listas y usar archivos únicamente para eventos y errores.
+- Compartir en el foro el enlace de GitHub y comprobar que el tutor tenga acceso.
+- Elaborar un único PDF con portada, introducción, enlace al repositorio,
+  conclusiones y referencias en normas APA, según la guía.
+- Comprobar novedades del curso y cualquier precisión adicional del tutor.
+
+La guía disponible indica cierre el **22 de noviembre de 2026** y valor de 150
+puntos. No se encontró una rúbrica específica de Fase 4 entre los archivos
+locales; la rúbrica de Fase 2 no se ha utilizado como si fuera la de esta actividad.
+
+## Material local y fuentes
+
+`material_curso/` contiene copias locales del anexo y la guía para su consulta
+local. Esos PDF no se suben a GitHub. `evidencias_privadas/`, cuando exista,
+tampoco se publica: la captura del foro contiene un enlace de invitación a WhatsApp.
+
+Documentación oficial consultada para contrastar la implementación:
+
+- Python Software Foundation. (s. f.). *Errores y excepciones*. Documentación de
+  Python 3.12. https://docs.python.org/es/3.12/tutorial/errors.html
+- Python Software Foundation. (s. f.). *Más herramientas para control de flujo:
+  valores por omisión para los argumentos*. Documentación de Python 3.12.
+  https://docs.python.org/es/3.12/tutorial/controlflow.html#default-argument-values
+- Python Software Foundation. (s. f.). *abc — Clases de base abstracta*.
+  Documentación de Python 3.12. https://docs.python.org/es/3.12/library/abc.html
+
+Las referencias de los documentos del curso deben completarse en el PDF a
+partir de sus datos reales. No inventar autores, fechas, páginas ni fuentes.
