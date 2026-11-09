@@ -2,7 +2,7 @@ __pycache__/
 *.py[cod]
 .venv/
 .DS_Store
-logs/
+registros/
 evidencias_privadas/
 material_curso/*.pdf
 

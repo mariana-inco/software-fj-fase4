@@ -66,4 +66,4 @@ def main():
 
 
 if __name__ == "__main__":  # Evita ejecutar la demostración al importarla.
-    main()  # Inicia la demostración cuando se usa python3 -m software_fj.demo_base.
+    main()  # Inicia la demostración cuando se usa python3 -m sistema_fj.demo_base.

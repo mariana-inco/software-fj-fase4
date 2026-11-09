@@ -9,8 +9,8 @@ Este repositorio contiene el **aporte inicial de clientes y servicios**. La clas
 Desde la carpeta raíz de este repositorio, con Python 3:
 
 ```bash
-python3 -m software_fj.demo_base
-python3 -m unittest discover -s tests -v
+python3 -m sistema_fj.demo_base
+python3 -m unittest discover -s pruebas -v
 ```
 
 En Windows puede utilizarse `py` en lugar de `python3`. Solo se usa la biblioteca
@@ -21,7 +21,7 @@ controlada. Termina con un cliente y tres servicios en memoria. Los rechazos son
 intencionales. Esta demostración de componentes **no sustituye las 10 operaciones
 completas del sistema**, que deben incluir reservas exitosas y fallidas.
 
-El registro se crea en `logs/software_fj.log`. Si no se puede abrir el archivo,
+El registro se crea en `registros/sistema_fj.log`. Si no se puede abrir el archivo,
 se informa la causa y se registra en consola. Los datos de clientes y servicios
 solo existen en objetos y listas durante la ejecución. No se usa JSON, CSV,
 pickle ni archivos para guardar información del negocio.
@@ -33,7 +33,7 @@ no equivale a una autorización del tutor para modificar el grupo de cinco
 estudiantes que indica el anexo.
 
 - Mariana: `Entidad`, `Cliente`, `Servicio`, sus tres especialidades,
-  catálogo de clientes y servicios, validaciones, excepciones, logs y pruebas de
+  catálogo de clientes y servicios, validaciones, excepciones, registros y pruebas de
   estos componentes. Revisar, entender y ajustar el aporte antes de sustentarlo.
 - Compañera: `Reserva`, estados y transiciones, gestor de reservas en una lista
   interna, integración, ejecución de al menos 10 operaciones completas con
@@ -46,16 +46,16 @@ trabajo real. No se deben atribuir aportes a personas que no los han realizado.
 
 ## Organización del código
 
-- `software_fj/entidad.py`: clase abstracta general con identificador de solo lectura.
-- `software_fj/cliente.py`: campos privados, propiedades y validaciones de contacto.
-- `software_fj/servicios.py`: `Servicio` abstracto, `ReservaSala`,
+- `sistema_fj/entidad.py`: clase abstracta general con identificador de solo lectura.
+- `sistema_fj/cliente.py`: campos privados, propiedades y validaciones de contacto.
+- `sistema_fj/servicios.py`: `Servicio` abstracto, `ReservaSala`,
   `AlquilerEquipo` y `AsesoriaEspecializada`.
-- `software_fj/catalogo.py`: altas y búsquedas en listas privadas de objetos.
-- `software_fj/validaciones.py`: texto, enteros y números finitos.
-- `software_fj/excepciones.py`: errores personalizados, incluidos los que puede usar Reserva.
-- `software_fj/registro.py`: archivo común de eventos y errores.
-- `software_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
-- `tests/test_base.py`: 20 pruebas de comportamientos válidos, inválidos y continuidad.
+- `sistema_fj/catalogo.py`: altas y búsquedas en listas privadas de objetos.
+- `sistema_fj/validaciones.py`: texto, enteros y números finitos.
+- `sistema_fj/excepciones.py`: errores personalizados, incluidos los que puede usar Reserva.
+- `sistema_fj/registro.py`: archivo común de eventos y errores.
+- `sistema_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
+- `pruebas/test_base.py`: 20 pruebas de comportamientos válidos, inválidos y continuidad.
 - `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
 
 `ReservaSala` es el **tipo de servicio** que alquila una sala. La futura clase

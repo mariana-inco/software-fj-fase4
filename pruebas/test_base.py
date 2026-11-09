@@ -5,16 +5,16 @@ import logging  # Permite probar el respaldo del registrador.
 import unittest  # Ejecuta pruebas sin instalar dependencias.
 from contextlib import redirect_stdout, redirect_stderr  # Aísla salidas de demostraciones y errores.
 from decimal import Decimal  # Compara importes sin tolerancias de punto flotante.
-from unittest.mock import patch  # Simula la falta de permisos del archivo de logs.
+from unittest.mock import patch  # Simula la falta de permisos del archivo de registros.
 
-from software_fj.catalogo import Catalogo  # Clase responsable de las listas internas.
-from software_fj.cliente import Cliente  # Clase de datos personales encapsulados.
-from software_fj.demo_base import ejecutar_operacion, main  # Frontera que debe sobrevivir errores.
-from software_fj.entidad import Entidad  # Abstracción que no debe instanciarse.
-from software_fj.excepciones import CalculoError, DuplicadoError, NoEncontradoError  # Errores esperados.
-from software_fj.excepciones import ServicioNoDisponibleError, ValidacionError  # Reglas de validación.
-from software_fj.registro import RUTA_LOG, obtener_logger  # Permite verificar registro y respaldo.
-from software_fj.servicios import AlquilerEquipo, AsesoriaEspecializada, ReservaSala, Servicio  # Modelos.
+from sistema_fj.catalogo import Catalogo  # Clase responsable de las listas internas.
+from sistema_fj.cliente import Cliente  # Clase de datos personales encapsulados.
+from sistema_fj.demo_base import ejecutar_operacion, main  # Frontera que debe sobrevivir errores.
+from sistema_fj.entidad import Entidad  # Abstracción que no debe instanciarse.
+from sistema_fj.excepciones import CalculoError, DuplicadoError, NoEncontradoError  # Errores esperados.
+from sistema_fj.excepciones import ServicioNoDisponibleError, ValidacionError  # Reglas de validación.
+from sistema_fj.registro import RUTA_LOG, obtener_logger  # Permite verificar registro y respaldo.
+from sistema_fj.servicios import AlquilerEquipo, AsesoriaEspecializada, ReservaSala, Servicio  # Modelos.
 
 
 class PruebasBase(unittest.TestCase):
@@ -167,8 +167,8 @@ class PruebasBase(unittest.TestCase):
     def test_respaldo_si_log_no_tiene_permisos(self):
         """La aplicación conserva un manejador cuando no puede crear la carpeta."""
         alterno = logging.Logger("prueba_sin_archivo")  # Registrador aislado del proyecto.
-        with patch("software_fj.registro.logging.getLogger", return_value=alterno), \
-                patch("software_fj.registro.Path.mkdir", side_effect=PermissionError("sin permiso")), \
+        with patch("sistema_fj.registro.logging.getLogger", return_value=alterno), \
+                patch("sistema_fj.registro.Path.mkdir", side_effect=PermissionError("sin permiso")), \
                 redirect_stderr(io.StringIO()):  # Simula ausencia de permisos sin tocar archivos reales.
             self.assertIs(obtener_logger(), alterno)  # Obtiene un registrador operativo.
             self.assertEqual(len(alterno.handlers), 1)  # Conserva un manejador de respaldo.

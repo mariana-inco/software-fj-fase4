@@ -13,15 +13,15 @@ ha enviado ninguna invitación.
 git clone https://github.com/mariana-inco/software-fj-fase4.git
 cd software-fj-fase4
 git switch -c aporte/reservas
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s pruebas -v
 ```
 
 ## API disponible
 
 ```python
-from software_fj.catalogo import Catalogo
-from software_fj.cliente import Cliente
-from software_fj.servicios import ReservaSala, AlquilerEquipo, AsesoriaEspecializada
+from sistema_fj.catalogo import Catalogo
+from sistema_fj.cliente import Cliente
+from sistema_fj.servicios import ReservaSala, AlquilerEquipo, AsesoriaEspecializada
 
 catalogo = Catalogo()
 cliente = catalogo.registrar_cliente(
@@ -61,9 +61,9 @@ Se rechazan argumentos desconocidos. El catálogo expone tuplas mediante
 
 ## Contrato propuesto de la siguiente parte
 
-Añadir `software_fj/reserva.py` y, si resulta necesario,
-`software_fj/gestor_reservas.py`, `software_fj/demo_integrada.py` y
-`tests/test_reservas.py`. No se han creado archivos vacíos que aparenten cumplirlos.
+Añadir `sistema_fj/reserva.py` y, si resulta necesario,
+`sistema_fj/gestor_reservas.py`, `sistema_fj/demo_integrada.py` y
+`pruebas/test_reservas.py`. No se han creado archivos vacíos que aparenten cumplirlos.
 
 Propuesta de diseño, ajustable por acuerdo entre ambas:
 
@@ -93,7 +93,7 @@ pero la política debe ser explícita, probada y coherente en todas las transici
 Reutilizar `ReservaError`, `ValidacionError` y
 `ServicioNoDisponibleError`; todas derivan de `ErrorSoftwareFJ` y se registran
 al crearse. Para eventos adicionales usar `from .registro import logger`.
-No repetir el mismo error en varios logs. Conservar la frontera de recuperación
+No repetir el mismo error en varios registros. Conservar la frontera de recuperación
 para que una operación fallida no termine la simulación.
 
 ## Antes de integrar
@@ -101,7 +101,7 @@ para que una operación fallida no termine la simulación.
 1. Añadir casos de reserva exitosa, falta de cliente/servicio, duración inválida,
    servicio no disponible, capacidad/stock insuficiente y transición no permitida.
 2. Probar que un error no altera el estado previo ni consume recursos parcialmente.
-3. Ejecutar todas las pruebas: `python3 -m unittest discover -s tests -v`.
+3. Ejecutar todas las pruebas: `python3 -m unittest discover -s pruebas -v`.
 4. Ejecutar la demo integrada y verificar al menos 10 operaciones completas,
    incluidas reservas válidas e inválidas y una operación exitosa posterior a los errores.
 5. Hacer commit con la cuenta propia, subir la rama y abrir un pull request.
