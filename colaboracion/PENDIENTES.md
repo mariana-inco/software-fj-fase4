@@ -36,7 +36,8 @@ explicaciones o correcciones concretas.
 ## 12 de noviembre — confirmación y revisión de servicios
 
 - [ ] Compañera: implementar confirmación con validación de disponibilidad y parámetros.
-- [ ] Mariana: comprobar una cotización de cada tipo de servicio y explicar el polimorfismo.
+- [x] Mariana: comprobar una cotización de cada tipo de servicio y explicar el polimorfismo.
+  Hecho el 10 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: commit de confirmación y resultados concretos de las cotizaciones.
 
 ## 13 de noviembre — cancelación y límites

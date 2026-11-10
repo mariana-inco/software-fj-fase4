@@ -73,6 +73,41 @@ Pendientes y siguiente paso: acordar con la compañera su usuario, el acceso y
 los estados de reserva. El 12 de noviembre corresponde comprobar una cotización
 de cada servicio. La clase `Reserva` sigue a cargo de ella.
 
+## 10 de noviembre de 2026 — cotización de los tres servicios
+
+Fecha real: 10 de noviembre de 2026, hora de Colombia, después de las 10:30.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad del calendario: cotización de cada tipo de servicio, prevista para el
+12 de noviembre. Se adelantó y queda registrada en la fecha real.
+
+Qué se hizo o revisó: se crearon una sala, un alquiler de equipos y una asesoría.
+Se llamó `calcular_costo` y `describir` sobre cada uno. Los tres son subclases de
+`Servicio`, así que la misma llamada usa la implementación de cada tipo.
+
+Archivos revisados: `sistema_fj/servicios.py` y las pruebas de polimorfismo y
+variantes de costo en `pruebas/test_base.py`. No se modificó el cálculo.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest` de `test_polimorfismo_y_costos` y
+`test_variantes_impuesto_descuento_y_cantidad`.
+
+Resultado observado:
+
+- Sala, tarifa 50000 por hora: una hora cuesta `50000.00` y dos horas, `100000.00`.
+  El número de personas no cambia el precio.
+- Equipo, tarifa 10000 por unidad y hora: una unidad durante una hora cuesta
+  `10000.00`. Dos unidades durante dos horas, con descuento `0.10` e impuesto
+  `0.19`, cuestan `42840.00` (`10000 × 2 × 2 × 0.90 × 1.19`).
+- Asesoría, tarifa 80000 por hora: una hora cuesta `80000.00` y hora y media,
+  `120000.00`.
+- Las dos pruebas terminaron OK.
+
+Commit: [1875851](https://github.com/mariana-inco/software-fj-fase4/commit/1875851).
+
+Pendientes y siguiente paso: la confirmación de reservas sigue a cargo de la
+compañera. El 13 de noviembre corresponde revisar los límites de personas y de
+unidades. La clase `Reserva` todavía no está implementada.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
