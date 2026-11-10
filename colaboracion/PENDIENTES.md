@@ -29,7 +29,8 @@ explicaciones o correcciones concretas.
 ## 11 de noviembre — estructura de Reserva y revisión de clientes
 
 - [ ] Compañera: crear Reserva con cliente, servicio, duración, parámetros y estado inicial.
-- [ ] Mariana: revisar Cliente y sus setters; explicar un registro válido y una actualización rechazada.
+- [x] Mariana: revisar Cliente y sus setters; explicar un registro válido y una actualización rechazada.
+  Hecho el 10 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: cambios de Reserva, ejemplos realmente ejecutados y sus resultados.
 
 ## 12 de noviembre — confirmación y revisión de servicios

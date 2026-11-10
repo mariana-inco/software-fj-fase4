@@ -33,6 +33,46 @@ privada; no se copian enlaces de invitación ni documentos de identidad aquí.
 - Pendiente al cerrar: acordar la colaboración; desarrollar reservas; completar
   integración, simulación, pruebas de reservas y PDF grupal.
 
+## 10 de noviembre de 2026 — revisión de Cliente
+
+Fecha real: 10 de noviembre de 2026, 07:56, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad del calendario: revisión de `Cliente` prevista para el 11 de noviembre.
+Se adelantó y queda registrada en la fecha real. El acuerdo de integración
+previsto para el 10 de noviembre sigue pendiente: todavía no hay usuario de
+GitHub de la compañera ni acceso de colaboración habilitado.
+
+Qué se hizo o revisó: se leyeron los setters de nombre, correo y teléfono.
+Se creó un cliente válido y se rechazó una actualización de correo y otra de
+teléfono. El comentario del correo decía que solo se conservaban las mayúsculas
+de la parte local; el ejemplo mostró que también se conserva el dominio. Se
+corrigió ese comentario.
+
+Archivos modificados o revisados: `sistema_fj/cliente.py` y las pruebas de
+cliente en `pruebas/test_base.py`.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest` de las tres pruebas de cliente.
+
+Resultado observado:
+
+- `" C10 "` se guardó como `C10`; `" Ana Pérez "` quedó `Ana Pérez`.
+- `"Ana@Example.com"` se conservó con las mayúsculas del nombre y del dominio.
+- `"0123456789"` siguió siendo texto, con el cero inicial.
+- `describir()` mostró `Cliente C10: Ana Pérez`, sin correo ni teléfono.
+- `correo = "sin-arroba"` lanzó `ValidacionError: Correo: formato inválido.`
+  y el correo siguió siendo `Ana@Example.com`.
+- Después, `nuevo@example.com` sí reemplazó el correo.
+- `telefono = "12"` lanzó `ValidacionError` y el teléfono siguió siendo
+  `0123456789`.
+- Las tres pruebas de cliente terminaron OK.
+
+Commit: [2b60e7a](https://github.com/mariana-inco/software-fj-fase4/commit/2b60e7a).
+
+Pendientes y siguiente paso: acordar con la compañera su usuario, el acceso y
+los estados de reserva. El 12 de noviembre corresponde comprobar una cotización
+de cada servicio. La clase `Reserva` sigue a cargo de ella.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
