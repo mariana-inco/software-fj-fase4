@@ -43,7 +43,7 @@ class Cliente(Entidad):
         nuevo = texto(valor, "Correo")  # Rechaza campos faltantes y caracteres de control.
         if len(nuevo) > 254 or not re.fullmatch(r"[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+", nuevo):
             raise ValidacionError("Correo: formato inválido.")  # Evita guardar el correo inválido.
-        self.__correo = nuevo  # Conserva mayúsculas de la parte local del correo.
+        self.__correo = nuevo  # Conserva el correo escrito, sin pasarlo a minúsculas.
 
     @property  # Expone lectura controlada del teléfono.
     def telefono(self):
