@@ -43,7 +43,8 @@ explicaciones o correcciones concretas.
 ## 13 de noviembre — cancelación y límites
 
 - [ ] Compañera: implementar cancelación y rechazo de transiciones no permitidas.
-- [ ] Mariana: revisar límites de personas y unidades; comprobar que un rechazo no altere los datos.
+- [x] Mariana: revisar límites de personas y unidades; comprobar que un rechazo no altere los datos.
+  Hecho el 11 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: cambios, pruebas de límites y comprobación del estado posterior al error.
 
 ## 14 de noviembre — procesamiento y excepciones

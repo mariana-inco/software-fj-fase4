@@ -108,6 +108,46 @@ Pendientes y siguiente paso: la confirmación de reservas sigue a cargo de la
 compañera. El 13 de noviembre corresponde revisar los límites de personas y de
 unidades. La clase `Reserva` todavía no está implementada.
 
+## 11 de noviembre de 2026 — límites de personas y unidades
+
+Fecha real: 11 de noviembre de 2026, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad del calendario: revisión de límites de personas y unidades, prevista
+para el 13 de noviembre. Se adelantó y queda registrada en la fecha real.
+
+Qué se hizo o revisó: se creó una sala de capacidad 10 y un alquiler de 3
+unidades. Se rechazó una solicitud de 11 personas y otra de 4 unidades. Después
+de cada rechazo se volvió a leer la capacidad y el stock. También se aceptó el
+máximo permitido y se comprobó que ni el rechazo ni la cotización cambian esos
+datos. En este módulo la cotización no descuenta inventario.
+
+Archivos modificados o revisados: `sistema_fj/servicios.py`,
+`pruebas/test_base.py` y `README.md`. Se añadió
+`test_rechazo_de_limites_conserva_datos` y el conteo de pruebas pasó de 21 a 22.
+No se cambió la regla de capacidad ni la de unidades.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Sala `S10`, capacidad inicial `10`. `personas=11` lanzó
+  `ValidacionError: Personas: se supera la capacidad de la sala.`
+  La capacidad siguió en `10`.
+- `personas=10` devolvió `{'personas': 10}` y la capacidad siguió en `10`.
+- Equipo `E10`, unidades iniciales `3`. `unidades=4` lanzó
+  `ValidacionError: Unidades: se supera la cantidad disponible.`
+  Las unidades siguieron en `3`.
+- Cotizar 3 unidades durante una hora costó `30000.00` y las unidades
+  siguieron en `3`.
+- Las 22 pruebas terminaron OK, incluida la nueva.
+
+Commit: [c1ac85a](https://github.com/mariana-inco/software-fj-fase4/commit/c1ac85a).
+
+Pendientes y siguiente paso: el 14 de noviembre corresponde seguir un error de
+conversión, su causa encadenada y su registro. La clase `Reserva` sigue a cargo
+de la compañera.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
