@@ -4,7 +4,7 @@ import io  # Captura salidas para verificar continuidad sin llenar la consola.
 import logging  # Permite probar el respaldo del registrador.
 import unittest  # Ejecuta pruebas sin instalar dependencias.
 from contextlib import redirect_stdout, redirect_stderr  # Aísla salidas de demostraciones y errores.
-from decimal import Decimal  # Compara importes sin tolerancias de punto flotante.
+from decimal import Decimal, InvalidOperation  # Compara importes y causas de conversión.
 from unittest.mock import patch  # Simula la falta de permisos del archivo de registros.
 
 from sistema_fj.catalogo import Catalogo  # Clase responsable de las listas internas.
@@ -173,6 +173,18 @@ class PruebasBase(unittest.TestCase):
         with self.assertRaises(CalculoError) as calculo:  # Rechaza costos imposibles de representar.
             self.sala.calcular_costo("1e999999")  # Fuerza exceso del contexto decimal.
         self.assertIsInstance(calculo.exception.__cause__, ArithmeticError)  # Conserva causa aritmética.
+
+    def test_conversion_encadena_causa_y_queda_en_log(self):
+        """La palabra 'dos' no es una duración: el error guarda la causa y se registra."""
+        with self.assertRaises(ValidacionError) as captura:  # La cotización debe rechazarse.
+            self.sala.calcular_costo("dos")  # Decimal no puede convertir esa palabra.
+        error = captura.exception  # Este es el error que ve quien llama.
+        self.assertEqual(str(error), "Duración: no se pudo convertir a número.")  # Mensaje del dominio.
+        self.assertIsInstance(error.__cause__, InvalidOperation)  # La causa técnica queda encadenada.
+        registro = RUTA_LOG.read_text(encoding="utf-8")  # El error se escribe al crearse.
+        self.assertIn("ValidacionError: Duración: no se pudo convertir a número.", registro)
+        self.assertEqual(self.sala.capacidad, 10)  # El rechazo no cambia la sala.
+        self.assertEqual(self.sala.calcular_costo(1), Decimal("50000.00"))  # Después sí se puede cotizar.
 
     def test_errores_quedan_en_log(self):
         """El registro de archivo debe incluir los errores propios detectados."""
