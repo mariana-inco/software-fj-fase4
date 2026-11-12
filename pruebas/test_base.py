@@ -145,6 +145,17 @@ class PruebasBase(unittest.TestCase):
         self.assertEqual(self.equipo.calcular_costo(1, unidades=3), Decimal("30000.00"))  # Límite válido.
         self.assertEqual(self.asesoria.validar_parametros(tema="POO"), {"tema": "POO"})  # Tema válido.
 
+    def test_tema_no_cambia_especialidad(self):
+        """El tema de una cotización no reemplaza el área guardada en la asesoría."""
+        self.assertEqual(self.asesoria.especialidad, "Python")  # El área se fijó al crear el servicio.
+        with self.assertRaises(ValidacionError):  # Un tema vacío no es válido.
+            self.asesoria.validar_parametros(tema=" ")  # Se rechaza antes de cotizar.
+        self.assertEqual(self.asesoria.especialidad, "Python")  # El rechazo no cambia el área.
+        self.assertEqual(self.asesoria.validar_parametros(tema="POO"), {"tema": "POO"})  # El tema sí se acepta.
+        self.assertEqual(self.asesoria.especialidad, "Python")  # Aceptarlo tampoco cambia el área.
+        self.assertEqual(self.asesoria.calcular_costo(1, tema="Listas"), Decimal("80000.00"))  # Una hora cuesta la tarifa.
+        self.assertEqual(self.asesoria.especialidad, "Python")  # Cotizar deja el área igual.
+
     def test_rechazo_de_limites_conserva_datos(self):
         """Un exceso de personas o de unidades no cambia la capacidad ni el stock."""
         self.assertEqual(self.sala.capacidad, 10)  # La sala de prueba admite diez personas.
