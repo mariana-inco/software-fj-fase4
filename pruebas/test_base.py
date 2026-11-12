@@ -85,6 +85,21 @@ class PruebasBase(unittest.TestCase):
         with self.assertRaises(DuplicadoError):  # Protege también las claves de servicios.
             self.catalogo.registrar_servicio(ReservaSala("S1", "Otra", 1, 1))  # Misma clave.
 
+    def test_alta_rechazada_conserva_listas(self):
+        """Un duplicado, un tipo incorrecto o una búsqueda vacía no cambian el catálogo."""
+        cliente = Cliente("C12", "Ana Perez", "ana@example.com", "3001234567")  # Cliente ficticio.
+        self.catalogo.registrar_cliente(cliente)  # Primera alta válida.
+        with self.assertRaises(DuplicadoError):  # La misma clave no puede repetirse.
+            self.catalogo.registrar_cliente(Cliente("C12", "Otra", "otra@example.com", "3001234568"))
+        with self.assertRaises(ValidacionError):  # Una sala no es un cliente.
+            self.catalogo.registrar_cliente(self.sala)  # No debe entrar a ninguna lista.
+        with self.assertRaises(ValidacionError):  # Un identificador vacío no es una búsqueda.
+            self.catalogo.buscar_cliente("  ")  # Se rechaza antes de recorrer la lista.
+        with self.assertRaises(NoEncontradoError):  # El servicio no fue registrado.
+            self.catalogo.buscar_servicio("S12")  # La ausencia no crea un servicio.
+        self.assertEqual(self.catalogo.clientes, (cliente,))  # Sigue el único cliente válido.
+        self.assertEqual(self.catalogo.servicios, ())  # La lista de servicios sigue vacía.
+
     def test_polimorfismo_y_costos(self):
         """La misma llamada utiliza los tres métodos sobrescritos."""
         servicios = (self.sala, self.equipo, self.asesoria)  # Lista heterogénea de servicios.
