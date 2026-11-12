@@ -186,6 +186,44 @@ Pendientes y siguiente paso: el 15 de noviembre corresponde integrar reservas
 con clientes y servicios. Esa parte sigue a cargo de la compañera mientras
 `Reserva` no esté implementada.
 
+## 12 de noviembre de 2026 — altas rechazadas del catálogo
+
+Fecha real: 12 de noviembre de 2026, mañana, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad: revisión adicional del catálogo. No estaba en el calendario
+inicial; se adelantó para no dejar esta comprobación para el final.
+
+Qué se hizo o revisó: se registró un cliente y se rechazaron un duplicado,
+una sala enviada como cliente y una búsqueda con identificador vacío. También
+se buscó un servicio que no existe. Después de cada rechazo se volvieron a
+contar las dos listas.
+
+Archivos modificados o revisados: `sistema_fj/catalogo.py`,
+`pruebas/test_base.py` y `README.md`. Se añadió
+`test_alta_rechazada_conserva_listas`. No se cambió la regla de alta ni la
+de búsqueda.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- El catálogo empezó con 1 cliente y 0 servicios.
+- El duplicado de `C12` lanzó `DuplicadoError: El identificador ya está registrado en este catálogo.`
+  Las listas siguieron en 1 y 0.
+- Registrar la sala como cliente lanzó `ValidacionError: Se esperaba un objeto Cliente.`
+  Las listas siguieron en 1 y 0.
+- `buscar_cliente("  ")` lanzó `ValidacionError: Identificador de búsqueda: debe ser un texto no vacío y sin caracteres de control.`
+- `buscar_servicio("S12")` lanzó `NoEncontradoError: No existe un objeto con el identificador indicado.`
+- Al final seguía el cliente `Ana Perez` y ningún servicio.
+- Las 24 pruebas terminaron OK, incluida la nueva.
+
+Commit: [d5c58d0](https://github.com/mariana-inco/software-fj-fase4/commit/d5c58d0).
+
+Pendientes y siguiente paso: comprobar el máximo de 100 caracteres del nombre
+y que una disponibilidad inválida no cambie el estado. `Reserva` sigue a cargo
+de la compañera.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No

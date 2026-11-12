@@ -40,6 +40,16 @@ explicaciones o correcciones concretas.
   Hecho el 10 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: commit de confirmación y resultados concretos de las cotizaciones.
 
+## 12 de noviembre — catálogo y conservación de datos
+
+Estas dos revisiones no estaban en el calendario inicial. Se hacen el 12 de
+noviembre para adelantar comprobaciones del aporte de Mariana.
+
+- [x] Mariana: comprobar que un alta o una búsqueda rechazada no cambia las listas del catálogo.
+  Hecho el 12 de noviembre. La evidencia está en la bitácora.
+- [ ] Mariana: comprobar el máximo del nombre y que una disponibilidad inválida no cambia el estado.
+- Evidencia esperada: ejemplos ejecutados y pruebas del estado posterior al rechazo.
+
 ## 13 de noviembre — cancelación y límites
 
 - [ ] Compañera: implementar cancelación y rechazo de transiciones no permitidas.
