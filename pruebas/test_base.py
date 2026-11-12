@@ -180,6 +180,21 @@ class PruebasBase(unittest.TestCase):
         self.sala.disponible = True  # Habilita nuevamente el servicio.
         self.assertEqual(self.sala.calcular_costo(1), Decimal("50000.00"))  # Opera normalmente.
 
+    def test_nombre_largo_y_disponibilidad_conservan_dato(self):
+        """Un nombre demasiado largo o un estado no booleano no reemplazan el dato anterior."""
+        cliente = Cliente("C12", "Ana", "ana@example.com", "3001234567")  # Cliente ficticio.
+        cliente.nombre = "A" * 100  # El máximo permitido es 100 caracteres.
+        with self.assertRaises(ValidacionError):  # 101 caracteres superan el límite.
+            cliente.nombre = "B" * 101  # No debe guardar el nombre nuevo.
+        self.assertEqual(cliente.nombre, "A" * 100)  # Permanece el nombre anterior.
+        self.sala.disponible = False  # El servicio queda deshabilitado.
+        for valor in ("si", 1, None):  # Textos y otros tipos no son booleanos.
+            with self.subTest(valor=valor), self.assertRaises(ValidacionError):
+                self.sala.disponible = valor  # Intenta cambiar el estado con un dato inválido.
+            self.assertIs(self.sala.disponible, False)  # El rechazo no lo reactiva.
+        self.sala.disponible = True  # Un booleano válido sí actualiza el estado.
+        self.assertIs(self.sala.disponible, True)  # La sala vuelve a estar disponible.
+
     def test_encadenamiento_y_fallo_aritmetico(self):
         """La excepción propia conserva la causa técnica para la depuración."""
         with self.assertRaises(ValidacionError) as captura:  # Captura la excepción externa.
