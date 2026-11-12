@@ -47,7 +47,8 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 
 - [x] Mariana: comprobar que un alta o una búsqueda rechazada no cambia las listas del catálogo.
   Hecho el 12 de noviembre. La evidencia está en la bitácora.
-- [ ] Mariana: comprobar el máximo del nombre y que una disponibilidad inválida no cambia el estado.
+- [x] Mariana: comprobar el máximo del nombre y que una disponibilidad inválida no cambia el estado.
+  Hecho el 12 de noviembre. La evidencia está en la bitácora.
 - Evidencia esperada: ejemplos ejecutados y pruebas del estado posterior al rechazo.
 
 ## 13 de noviembre — cancelación y límites

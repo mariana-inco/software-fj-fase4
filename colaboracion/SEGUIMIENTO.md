@@ -224,6 +224,39 @@ Pendientes y siguiente paso: comprobar el máximo de 100 caracteres del nombre
 y que una disponibilidad inválida no cambie el estado. `Reserva` sigue a cargo
 de la compañera.
 
+## 12 de noviembre de 2026 — nombre y disponibilidad
+
+Fecha real: 12 de noviembre de 2026, mañana, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad: segunda revisión adicional del 12 de noviembre. Comprueba el máximo
+del nombre y que un valor inválido de disponibilidad no cambie el estado.
+
+Qué se hizo o revisó: se guardó un nombre de 100 caracteres y se rechazó uno de
+101. El nombre anterior permaneció. Después se deshabilitó una sala y se
+intentó reactivarla con `"si"`, `1` y `None`. Solo `True` volvió a habilitarla.
+
+Archivos modificados o revisados: `sistema_fj/cliente.py`,
+`sistema_fj/servicios.py`, `pruebas/test_base.py` y `README.md`. Se añadió
+`test_nombre_largo_y_disponibilidad_conservan_dato`. No se cambiaron las reglas.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- `"A" * 100` se guardó. `"B" * 101` lanzó `ValidacionError: Nombre: máximo 100 caracteres.`
+  El nombre siguió siendo los 100 caracteres `A`.
+- Con la sala deshabilitada, `"si"`, `1` y `None` lanzaron
+  `ValidacionError: Disponibilidad: debe ser True o False.`
+  El estado siguió en `False`.
+- `disponible = True` dejó la sala habilitada.
+- Las 25 pruebas terminaron OK, incluida la nueva.
+
+Commit: [9143f5b](https://github.com/mariana-inco/software-fj-fase4/commit/9143f5b).
+
+Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
+con clientes y servicios. Esa clase sigue a cargo de la compañera.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
