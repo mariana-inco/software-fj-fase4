@@ -257,6 +257,42 @@ Commit: [9143f5b](https://github.com/mariana-inco/software-fj-fase4/commit/9143f
 Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
 con clientes y servicios. Esa clase sigue a cargo de la compañera.
 
+## 12 de noviembre de 2026 — costo imposible de representar
+
+Fecha real: 12 de noviembre de 2026, después de las 10:45, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad: revisión adicional del cálculo. No estaba en el calendario inicial.
+Sigue el otro error encadenado del costo, distinto del error de conversión.
+
+Qué se hizo o revisó: se cotizó una sala con duración `"1e999999"`. El número
+sí se convierte, pero el importe no cabe en el contexto decimal. `_calcular_total`
+lanza `CalculoError` y encadena la causa con `raise ... from`. El error queda
+en el log. La tarifa, la capacidad y la disponibilidad no cambian, y una
+cotización posterior de una hora sí se calcula.
+
+Archivos modificados o revisados: `sistema_fj/servicios.py`,
+`sistema_fj/excepciones.py`, `sistema_fj/registro.py`, `pruebas/test_base.py`
+y `README.md`. Se añadió `test_calculo_imposible_conserva_servicio_y_queda_en_log`.
+No se cambió la fórmula ni el registro.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Sala `S30`, tarifa `50000`, capacidad `10` y disponible `True`.
+- `calcular_costo("1e999999")` lanzó `CalculoError: No se pudo representar el costo solicitado.`
+- La causa encadenada fue `Overflow: [<class 'decimal.Overflow'>]`.
+- El log añadió `2026-11-12 10:46:09,330 | ERROR | CalculoError: No se pudo representar el costo solicitado.`
+- Después del rechazo la tarifa siguió en `50000`, la capacidad en `10` y la sala disponible.
+- Una hora válida costó `50000.00`.
+- Las 26 pruebas terminaron OK, incluida la nueva.
+
+Commit: [9704780](https://github.com/mariana-inco/software-fj-fase4/commit/9704780).
+
+Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
+con clientes y servicios. Esa clase sigue a cargo de la compañera.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No

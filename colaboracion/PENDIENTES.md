@@ -51,6 +51,12 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
   Hecho el 12 de noviembre. La evidencia está en la bitácora.
 - Evidencia esperada: ejemplos ejecutados y pruebas del estado posterior al rechazo.
 
+## 12 de noviembre — costo imposible de representar
+
+- [x] Mariana: seguir un costo que no se puede representar, su causa encadenada y comprobar que el servicio no cambia.
+  Hecho el 12 de noviembre. La evidencia está en la bitácora.
+- Evidencia esperada: error observado, causa técnica, línea del registro y estado posterior.
+
 ## 13 de noviembre — cancelación y límites
 
 - [ ] Compañera: implementar cancelación y rechazo de transiciones no permitidas.
