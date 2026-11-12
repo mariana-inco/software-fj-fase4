@@ -4,7 +4,7 @@ import io  # Captura salidas para verificar continuidad sin llenar la consola.
 import logging  # Permite probar el respaldo del registrador.
 import unittest  # Ejecuta pruebas sin instalar dependencias.
 from contextlib import redirect_stdout, redirect_stderr  # Aísla salidas de demostraciones y errores.
-from decimal import Decimal, InvalidOperation  # Compara importes y causas de conversión.
+from decimal import Decimal, InvalidOperation, Overflow  # Compara importes y causas técnicas.
 from unittest.mock import patch  # Simula la falta de permisos del archivo de registros.
 
 from sistema_fj.catalogo import Catalogo  # Clase responsable de las listas internas.
@@ -214,6 +214,22 @@ class PruebasBase(unittest.TestCase):
         registro = RUTA_LOG.read_text(encoding="utf-8")  # El error se escribe al crearse.
         self.assertIn("ValidacionError: Duración: no se pudo convertir a número.", registro)
         self.assertEqual(self.sala.capacidad, 10)  # El rechazo no cambia la sala.
+        self.assertEqual(self.sala.calcular_costo(1), Decimal("50000.00"))  # Después sí se puede cotizar.
+
+    def test_calculo_imposible_conserva_servicio_y_queda_en_log(self):
+        """Un costo imposible de representar guarda la causa y no cambia el servicio."""
+        self.assertEqual(self.sala.tarifa_hora, Decimal("50000"))  # Tarifa inicial de la sala de prueba.
+        self.assertIs(self.sala.disponible, True)  # La sala empieza disponible.
+        with self.assertRaises(CalculoError) as captura:  # La cotización debe rechazarse.
+            self.sala.calcular_costo("1e999999")  # El importe no cabe en el contexto decimal.
+        error = captura.exception  # Error propio que ve quien llama.
+        self.assertEqual(str(error), "No se pudo representar el costo solicitado.")  # Mensaje del dominio.
+        self.assertIsInstance(error.__cause__, Overflow)  # La causa técnica queda encadenada.
+        registro = RUTA_LOG.read_text(encoding="utf-8")  # El error se escribe al crearse.
+        self.assertIn("CalculoError: No se pudo representar el costo solicitado.", registro)
+        self.assertEqual(self.sala.capacidad, 10)  # La capacidad no cambió.
+        self.assertEqual(self.sala.tarifa_hora, Decimal("50000"))  # La tarifa tampoco cambió.
+        self.assertIs(self.sala.disponible, True)  # Sigue disponible.
         self.assertEqual(self.sala.calcular_costo(1), Decimal("50000.00"))  # Después sí se puede cotizar.
 
     def test_errores_quedan_en_log(self):
