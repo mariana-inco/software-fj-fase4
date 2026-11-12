@@ -148,6 +148,44 @@ Pendientes y siguiente paso: el 14 de noviembre corresponde seguir un error de
 conversión, su causa encadenada y su registro. La clase `Reserva` sigue a cargo
 de la compañera.
 
+## 11 de noviembre de 2026 — error de conversión y su registro
+
+Fecha real: 11 de noviembre de 2026, hora de Colombia, después de las 22:00.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad del calendario: seguir un error de conversión, su causa encadenada y
+su registro, prevista para el 14 de noviembre. Se adelantó y queda registrada
+en la fecha real.
+
+Qué se hizo o revisó: se cotizó una sala con duración `"dos"`. `numero` intenta
+convertir ese texto con `Decimal`. La conversión falla, se lanza `ValidacionError`
+y la causa técnica queda encadenada con `raise ... from`. Al crearse, el error
+propio se escribe en el log. La causa técnica no se copia al archivo: el log
+guarda el tipo y el mensaje del dominio. Después del rechazo, la sala sigue
+pudiendo cotizar.
+
+Archivos modificados o revisados: `sistema_fj/validaciones.py`,
+`sistema_fj/excepciones.py`, `sistema_fj/registro.py`, `pruebas/test_base.py`
+y `README.md`. Se añadió `test_conversion_encadena_causa_y_queda_en_log`.
+No se cambió la conversión ni el formato del log.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Sala `S20`, tarifa `50000` y capacidad `10`.
+- `calcular_costo("dos")` lanzó `ValidacionError: Duración: no se pudo convertir a número.`
+- La causa encadenada fue `InvalidOperation: [<class 'decimal.ConversionSyntax'>]`.
+- El log añadió `2026-11-11 22:01:43,002 | ERROR | ValidacionError: Duración: no se pudo convertir a número.`
+- La capacidad siguió en `10` y la tarifa en `50000`.
+- Las 23 pruebas terminaron OK, incluida la nueva.
+
+Commit: [c9362fb](https://github.com/mariana-inco/software-fj-fase4/commit/c9362fb).
+
+Pendientes y siguiente paso: el 15 de noviembre corresponde integrar reservas
+con clientes y servicios. Esa parte sigue a cargo de la compañera mientras
+`Reserva` no esté implementada.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No

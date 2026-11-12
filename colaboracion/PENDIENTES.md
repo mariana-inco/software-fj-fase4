@@ -50,7 +50,8 @@ explicaciones o correcciones concretas.
 ## 14 de noviembre — procesamiento y excepciones
 
 - [ ] Compañera: implementar procesamiento y conservación del estado ante un fallo.
-- [ ] Mariana: seguir un error de conversión, su causa encadenada y su registro.
+- [x] Mariana: seguir un error de conversión, su causa encadenada y su registro.
+  Hecho el 11 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: procesamiento comprobado y explicación del error observado.
 
 ## 15 de noviembre — lista de reservas e integración inicial
