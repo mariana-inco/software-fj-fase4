@@ -293,6 +293,40 @@ Commit: [9704780](https://github.com/mariana-inco/software-fj-fase4/commit/97047
 Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
 con clientes y servicios. Esa clase sigue a cargo de la compañera.
 
+## 12 de noviembre de 2026 — especialidad de la asesoría
+
+Fecha real: 12 de noviembre de 2026, después de las 16:00, hora de Colombia.
+Participante y cuenta de GitHub: Mariana Gomez, `mariana-inco`.
+Actividad: revisión adicional de `AsesoriaEspecializada`. No estaba en el
+calendario inicial. Comprueba que el tema de una cotización no cambia el área
+guardada en el servicio.
+
+Qué se hizo o revisó: se creó una asesoría de área `Python`. Se rechazó un tema
+vacío, se aceptó el tema `POO` y se cotizó una hora con el tema `Listas`.
+Después de cada caso se volvió a leer la especialidad.
+
+Archivos modificados o revisados: `sistema_fj/servicios.py`,
+`pruebas/test_base.py` y `README.md`. Se añadió `test_tema_no_cambia_especialidad`.
+No se cambió la regla del tema ni la de la especialidad.
+
+Comando o procedimiento de comprobación: ejemplo directo con datos ficticios y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Asesoría `A20`, área inicial `Python`.
+- `tema=" "` lanzó `ValidacionError: Tema: debe ser un texto no vacío y sin caracteres de control.`
+  El área siguió en `Python`.
+- `tema="POO"` devolvió `{'tema': 'POO'}` y el área siguió en `Python`.
+- Cotizar una hora con tema `Listas` costó `80000.00`. El área siguió en `Python`.
+- `describir()` mostró `Asesoría Tutoría: área Python, tarifa/hora 80000`.
+- Las 27 pruebas terminaron OK, incluida la nueva.
+
+Commit: [45ef5c3](https://github.com/mariana-inco/software-fj-fase4/commit/45ef5c3).
+
+Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
+con clientes y servicios. Esa clase sigue a cargo de la compañera.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No

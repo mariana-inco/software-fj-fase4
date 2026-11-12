@@ -57,6 +57,12 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
   Hecho el 12 de noviembre. La evidencia está en la bitácora.
 - Evidencia esperada: error observado, causa técnica, línea del registro y estado posterior.
 
+## 12 de noviembre — especialidad de la asesoría
+
+- [x] Mariana: comprobar que el tema de una cotización no cambia el área guardada en la asesoría.
+  Hecho el 12 de noviembre. La evidencia está en la bitácora.
+- Evidencia esperada: tema rechazado, tema válido, costo y especialidad posterior.
+
 ## 13 de noviembre — cancelación y límites
 
 - [ ] Compañera: implementar cancelación y rechazo de transiciones no permitidas.
