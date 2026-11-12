@@ -130,6 +130,22 @@ class PruebasBase(unittest.TestCase):
         self.assertEqual(self.equipo.calcular_costo(1, unidades=3), Decimal("30000.00"))  # Límite válido.
         self.assertEqual(self.asesoria.validar_parametros(tema="POO"), {"tema": "POO"})  # Tema válido.
 
+    def test_rechazo_de_limites_conserva_datos(self):
+        """Un exceso de personas o de unidades no cambia la capacidad ni el stock."""
+        self.assertEqual(self.sala.capacidad, 10)  # La sala de prueba admite diez personas.
+        with self.assertRaises(ValidacionError):  # Once personas superan ese máximo.
+            self.sala.validar_parametros(personas=11)  # El rechazo ocurre antes de cotizar.
+        self.assertEqual(self.sala.capacidad, 10)  # La capacidad sigue siendo diez.
+        self.assertEqual(self.sala.validar_parametros(personas=10), {"personas": 10})  # El máximo sí es válido.
+        self.assertEqual(self.sala.capacidad, 10)  # Aceptar el límite tampoco la reduce.
+
+        self.assertEqual(self.equipo.unidades_disponibles, 3)  # Hay tres unidades al empezar.
+        with self.assertRaises(ValidacionError):  # Cuatro unidades superan el stock.
+            self.equipo.calcular_costo(1, unidades=4)  # No llega a calcular el costo.
+        self.assertEqual(self.equipo.unidades_disponibles, 3)  # El inventario no cambió.
+        self.assertEqual(self.equipo.calcular_costo(1, unidades=3), Decimal("30000.00"))  # El máximo sí se cobra.
+        self.assertEqual(self.equipo.unidades_disponibles, 3)  # Cobrar no descuenta unidades.
+
     def test_servicios_invalidos_y_parametros_faltantes(self):
         """Rechaza capacidades fraccionarias, tarifas nulas y especialidades faltantes."""
         constructores = [lambda: ReservaSala("S", "Sala", 1, 1.5),
