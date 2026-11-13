@@ -5,11 +5,11 @@ from .demo_base import ejecutar_operacion  # Un error no corta las operaciones s
 from .gestor_reservas import GestorReservas  # Lista interna y control de cupo.
 from .registro import RUTA_LOG  # Dónde quedan los eventos y los errores.
 from .reserva import Reserva  # Operación que une cliente, servicio, duración y costo.
-from .servicios import AlquilerEquipo, ReservaSala  # Servicios usados en este recorrido.
+from .servicios import AlquilerEquipo, AsesoriaEspecializada, ReservaSala  # Los tres servicios.
 
 
 def main():
-    """Ejecuta 12 operaciones. Los datos son ficticios y los rechazos son intencionales."""
+    """Ejecuta 15 operaciones. Los datos son ficticios y los rechazos son intencionales."""
     gestor = GestorReservas()  # Empieza sin reservas.
     creados = {}  # Guarda los objetos que las operaciones siguientes reutilizan.
 
@@ -49,8 +49,14 @@ def main():
         ("Rechazar sala sin capacidad", lambda: ReservaSala("S002", "Sala B", "50000", 0)),
         ("Registrar equipo válido", lambda: guardar(
             "equipo", AlquilerEquipo("E001", "Portatil", "10000", 3))),
+        ("Registrar asesoría válida", lambda: guardar(
+            "asesoria", AsesoriaEspecializada("A001", "Asesoria Python", "80000", "Python"))),
+        ("Rechazar asesoría sin especialidad", lambda: AsesoriaEspecializada(
+            "A002", "Asesoria", "80000", "")),
         ("Confirmar reserva de sala", lambda: guardar(
             "sala_reserva", confirmar_nueva("R001", creados["cliente"], creados["sala"], 2, personas=4))),
+        ("Confirmar reserva de asesoría", lambda: confirmar_nueva(
+            "R006", creados["cliente"], creados["asesoria"], 1, tema="Listas")),
         ("Rechazar sala con demasiadas personas", lambda: Reserva(
             "R002", creados["cliente"], creados["sala"], 1, personas=11)),
         ("Rechazar segunda sala mientras la primera está confirmada", segunda_sala),
@@ -58,10 +64,10 @@ def main():
         ("Rechazar confirmación de equipo apagado", equipo_apagado),
         ("Cancelar la sala confirmada y liberarla", lambda: creados["sala_reserva"].cancelar()),
         ("Confirmar la sala pendiente después de los errores", lambda: gestor.confirmar(creados["pendiente"])),
-    ]  # Doce operaciones: aciertos, rechazos y un acierto final.
+    ]  # Quince operaciones: los tres servicios, rechazos y un acierto final.
     print("SOFTWARE FJ - simulación completa de clientes, servicios y reservas")  # Alcance de este recorrido.
     exitos = 0  # Cuenta las operaciones que terminan bien.
-    for numero, (titulo, accion) in enumerate(operaciones, start=1):  # Recorre las doce en orden.
+    for numero, (titulo, accion) in enumerate(operaciones, start=1):  # Recorre las quince en orden.
         if ejecutar_operacion(numero, titulo, accion):  # Si falla, sigue con la siguiente.
             exitos += 1  # Solo cuenta las que no lanzaron error.
     print(f"\nResumen: {exitos} correctas, {len(operaciones) - exitos} rechazadas, {len(operaciones)} ejecutadas.")

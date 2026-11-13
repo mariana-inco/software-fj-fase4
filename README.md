@@ -19,9 +19,9 @@ En Windows puede utilizarse `py` en lugar de `python3`. Solo se usa la bibliotec
 estándar; no hay paquetes que instalar. Validado localmente con Python 3.14.7.
 
 `demo_base` recorre 16 casos de clientes y servicios: 7 aceptados y 9 rechazados.
-`demo_integrada` es el recorrido completo: 12 operaciones, 6 aceptadas y 6
-rechazadas. Incluye clientes y servicios válidos e inválidos, reservas exitosas
-y fallidas, y una confirmación correcta después de los errores.
+`demo_integrada` es el recorrido completo: 15 operaciones, 8 aceptadas y 7
+rechazadas. Incluye clientes y los tres servicios, casos válidos e inválidos,
+reservas exitosas y fallidas, y una confirmación correcta después de los errores.
 
 El registro se crea en `registros/sistema_fj.log`. Si no se puede abrir el archivo,
 se informa la causa y se registra en consola. Los datos de clientes y servicios

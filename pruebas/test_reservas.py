@@ -100,15 +100,16 @@ class PruebasReservas(unittest.TestCase):
         self.assertEqual(segunda.estado, "PENDIENTE")  # El estado anterior se conserva.
 
     def test_demo_completa(self):
-        """La simulación recorre 12 operaciones y confirma una reserva después de los errores."""
+        """La simulación recorre 15 operaciones y confirma una reserva después de los errores."""
         salida = io.StringIO()  # Guarda el texto de la demo.
         with redirect_stdout(salida):  # No mezcla la demo con el resultado de la prueba.
             gestor = main()  # Ejecuta clientes, servicios y reservas.
-        self.assertIn("6 correctas, 6 rechazadas, 12 ejecutadas", salida.getvalue())  # El recorrido no se detuvo.
+        self.assertIn("8 correctas, 7 rechazadas, 15 ejecutadas", salida.getvalue())  # El recorrido no se detuvo.
         estados = {reserva.identificador: reserva.estado for reserva in gestor.listar_reservas()}  # Resultado final.
         self.assertEqual(estados["R001"], "CANCELADA")  # La primera sala se liberó.
         self.assertEqual(estados["R003"], "CONFIRMADA")  # Esta se confirmó después de los errores.
         self.assertEqual(estados["R005"], "PENDIENTE")  # El equipo apagado no llegó a confirmarse.
+        self.assertEqual(estados["R006"], "CONFIRMADA")  # La asesoría también quedó reservada.
 
 
 if __name__ == "__main__":  # Permite ejecutar solo este archivo.
