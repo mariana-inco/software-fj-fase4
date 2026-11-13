@@ -6,10 +6,9 @@ nuevos sin sustituir clientes, servicios ni sus pruebas.
 ## Preparar el entorno de la compañera
 
 El repositorio es público: puede consultarse y clonarse sin invitación.
-Para que la compañera suba cambios directamente, Mariana debe darle acceso desde
-Settings → Collaborators. Su usuario de GitHub está pendiente de informar;
-todavía no se ha enviado ninguna invitación. Otra opción es crear una copia
-propia del repositorio y enviar los cambios mediante un pull request.
+La compañera ya subió archivos con la cuenta `Marianita82J-m`. Esos archivos
+se organizaron dentro de `sistema_fj` para que usen los clientes y servicios
+existentes.
 
 ```bash
 git clone https://github.com/mariana-inco/software-fj-fase4.git
@@ -63,9 +62,9 @@ Se rechazan argumentos desconocidos. El catálogo expone tuplas mediante
 
 ## Contrato propuesto de la siguiente parte
 
-Añadir `sistema_fj/reserva.py` y, si resulta necesario,
-`sistema_fj/gestor_reservas.py`, `sistema_fj/demo_integrada.py` y
-`pruebas/test_reservas.py`. No se han creado archivos vacíos que aparenten cumplirlos.
+Los archivos quedaron en `sistema_fj/reserva.py`, `sistema_fj/gestor_reservas.py`,
+`sistema_fj/demo_integrada.py` y `pruebas/test_reservas.py`. Salen del aporte
+subido en `Programacion Fase 4` y ahora importan las clases existentes.
 
 Propuesta de diseño, ajustable por acuerdo entre ambas:
 

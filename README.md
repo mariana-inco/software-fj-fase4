@@ -1,25 +1,26 @@
 # Software FJ — Fase 4 de Programación (213023)
 
 Proyecto académico de gestión de clientes, servicios y reservas, sin base de datos.
-Este repositorio contiene el **aporte inicial de clientes y servicios**. La clase
-`Reserva` y la simulación integrada del sistema todavía están pendientes.
+El aporte de clientes y servicios está en `sistema_fj`. La clase `Reserva`,
+el gestor y una simulación de 10 operaciones quedaron organizados en ese mismo
+paquete a partir de los archivos que subió Marianita82J-m.
 
-## Ejecutar el aporte inicial
+## Ejecutar
 
 Desde la carpeta raíz de este repositorio, con Python 3:
 
 ```bash
 python3 -m sistema_fj.demo_base
+python3 -m sistema_fj.demo_integrada
 python3 -m unittest discover -s pruebas -v
 ```
 
 En Windows puede utilizarse `py` en lugar de `python3`. Solo se usa la biblioteca
 estándar; no hay paquetes que instalar. Validado localmente con Python 3.14.7.
 
-La demostración recorre 16 casos: 7 operaciones aceptadas y 9 rechazadas de forma
-controlada. Termina con un cliente y tres servicios en memoria. Los rechazos son
-intencionales. Esta demostración de componentes **no sustituye las 10 operaciones
-completas del sistema**, que deben incluir reservas exitosas y fallidas.
+`demo_base` recorre 16 casos de clientes y servicios: 7 aceptados y 9 rechazados.
+`demo_integrada` recorre 10 operaciones de reserva: 5 procesadas y 5 rechazadas.
+Los rechazos son intencionales y el recorrido sigue después de cada error.
 
 El registro se crea en `registros/sistema_fj.log`. Si no se puede abrir el archivo,
 se informa la causa y se registra en consola. Los datos de clientes y servicios
@@ -35,10 +36,11 @@ estudiantes que indica el anexo.
 - Mariana: `Entidad`, `Cliente`, `Servicio`, sus tres especialidades,
   catálogo de clientes y servicios, validaciones, excepciones, registros y pruebas de
   estos componentes. Revisar, entender y ajustar el aporte antes de sustentarlo.
-- Compañera: `Reserva`, estados y transiciones, gestor de reservas en una lista
-  interna, integración, ejecución de al menos 10 operaciones completas con
-  aciertos y errores, y pruebas de reservas. Puede añadir un menú de consola como
-  apoyo; la guía no lo exige expresamente.
+- Compañera, cuenta `Marianita82J-m`: `Reserva`, estados y transiciones, gestor
+  de reservas en una lista interna y la simulación de 10 operaciones. Esos
+  archivos se subieron en la carpeta `Programacion Fase 4` y luego se organizaron
+  dentro de `sistema_fj`. Puede añadir un menú de consola como apoyo; la guía no
+  lo exige expresamente.
 - Ambas: revisión final, comprobación de aportes reales en GitHub y PDF grupal.
 
 Cada participante debe trabajar con su propia cuenta y realizar commits de su
@@ -54,14 +56,18 @@ trabajo real. No se deben atribuir aportes a personas que no los han realizado.
 - `sistema_fj/validaciones.py`: texto, enteros y números finitos.
 - `sistema_fj/excepciones.py`: errores personalizados, incluidos los que puede usar Reserva.
 - `sistema_fj/registro.py`: archivo común de eventos y errores.
-- `sistema_fj/demo_base.py`: recorrido secuencial que continúa después de errores.
-- `pruebas/test_base.py`: 27 pruebas de comportamientos válidos, inválidos y continuidad.
+- `sistema_fj/demo_base.py`: recorrido secuencial de clientes y servicios.
+- `sistema_fj/reserva.py`: estados de la reserva y transiciones permitidas.
+- `sistema_fj/gestor_reservas.py`: lista interna de reservas, sin identificadores repetidos.
+- `sistema_fj/demo_integrada.py`: 10 operaciones de reserva, con aciertos y rechazos.
+- `pruebas/test_base.py`: 27 pruebas de clientes y servicios.
+- `pruebas/test_reservas.py`: pruebas de estados, duplicados y de la demo integrada.
 - `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
 - [Pendientes](colaboracion/PENDIENTES.md): actividades propuestas hasta la entrega.
 - [Bitácora](colaboracion/SEGUIMIENTO.md): avances realizados y evidencias verificables.
 
-`ReservaSala` es el **tipo de servicio** que alquila una sala. La futura clase
-`Reserva` será la operación que relaciona cliente, servicio, duración y estado.
+`ReservaSala` es el **tipo de servicio** que alquila una sala. La clase
+`Reserva` es la operación que relaciona cliente, servicio, duración y estado.
 
 ## Decisiones de diseño que no fija el enunciado
 
@@ -115,9 +121,11 @@ La distribución por días está en [PENDIENTES.md](colaboracion/PENDIENTES.md).
 Registrar cada actividad realizada en la [bitácora](colaboracion/SEGUIMIENTO.md)
 y cerrar las casillas únicamente cuando se haya comprobado el resultado.
 
-- Implementar y probar `Reserva`, incluyendo confirmación, cancelación y procesamiento.
-- Integrar al menos 10 operaciones completas: clientes válidos e inválidos,
-  servicios válidos e inválidos, reservas exitosas y fallidas, continuación tras errores.
+- Completar en `Reserva` la validación de disponibilidad y parámetros al confirmar,
+  el costo de la reserva y la política de ocupación. La confirmación, la cancelación
+  y el procesamiento básicos ya están organizados.
+- La demo integrada ya recorre 10 operaciones de reserva. Falta ampliarla con
+  clientes y servicios inválidos dentro de ese mismo recorrido, si el grupo lo acuerda.
 - Mantener los datos del negocio en listas y usar archivos únicamente para eventos y errores.
 - Compartir en el foro el enlace de GitHub y comprobar que el tutor tenga acceso.
 - Elaborar un único PDF con portada, introducción, enlace al repositorio,

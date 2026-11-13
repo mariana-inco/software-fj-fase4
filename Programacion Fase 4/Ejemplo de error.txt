@@ -1,4 +1,0 @@
-try:
-    reserva.confirmar()
-except Exception as e:
-    logging.error(f"Error confirmando reserva: {e}")
