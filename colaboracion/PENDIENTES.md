@@ -65,7 +65,12 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 
 ## 13 de noviembre — cancelación y límites
 
-- [ ] Compañera: implementar cancelación y rechazo de transiciones no permitidas.
+- [ ] Compañera: completar el rechazo de transiciones. Ya subió confirmar, cancelar
+  y procesar. Al organizar el código se rechazó también cancelar una reserva ya
+  cancelada. Sigue pendiente validar disponibilidad y parámetros al confirmar.
+- [x] Mariana: organizar los archivos de Reserva, el gestor y la simulación que
+  subió la compañera, y conectarlos con los clientes y servicios existentes.
+  Hecho el 13 de noviembre. La evidencia está en la bitácora.
 - [x] Mariana: revisar límites de personas y unidades; comprobar que un rechazo no altere los datos.
   Hecho el 11 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: cambios, pruebas de límites y comprobación del estado posterior al error.
@@ -80,7 +85,9 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 ## 15 de noviembre — lista de reservas e integración inicial
 
 - [ ] Compañera: implementar la lista de reservas y evitar identificadores duplicados.
-- [ ] Ambas: conectar Reserva con los clientes y servicios existentes.
+- [x] Ambas: conectar Reserva con los clientes y servicios existentes.
+  Hecho el 13 de noviembre, al organizar el aporte de Marianita82J-m. La política
+  de ocupación sigue pendiente. La evidencia está en la bitácora.
 - [ ] Ambas: verificar la política de ocupación y liberación de recursos que acordaron.
 - Evidencia esperada: una reserva integrada que complete su ciclo y pruebas de recursos.
 

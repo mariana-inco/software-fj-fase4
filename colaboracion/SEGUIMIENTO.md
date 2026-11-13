@@ -327,6 +327,56 @@ Commit: [45ef5c3](https://github.com/mariana-inco/software-fj-fase4/commit/45ef5
 Pendientes y siguiente paso: el 15 de noviembre corresponde integrar `Reserva`
 con clientes y servicios. Esa clase sigue a cargo de la compañera.
 
+## 13 de noviembre de 2026 — organizar el aporte de reservas
+
+Fecha real: 13 de noviembre de 2026, mañana, hora de Colombia.
+Participante que organiza: Mariana Gomez, `mariana-inco`.
+El código de estados lo subió Marianita82J-m el 12 de noviembre, en el commit
+`5dc158e`, dentro de la carpeta `Programacion Fase 4`.
+
+Qué se revisó: había cinco archivos sueltos. `Clase R.py` define `Reserva`
+con estados PENDIENTE, CONFIRMADA, CANCELADA y PROCESADA, y los métodos
+confirmar, cancelar y procesar. `Gestor de reserva.py` guarda las reservas en
+una lista y permite buscar por estado. `Simulacion de 10 operaciones.py`
+propone cinco reservas válidas y cinco rechazos. Los dos txt son un ejemplo
+de `try/except` y un ejemplo de `logging`. Esa simulación no se podía ejecutar:
+no importaba las clases y usaba constructores distintos de `Cliente` y de los
+servicios del proyecto.
+
+Qué se organizó: las clases pasaron a `sistema_fj/reserva.py`,
+`sistema_fj/gestor_reservas.py` y `sistema_fj/demo_integrada.py`. La simulación
+ahora crea clientes y servicios con las clases existentes. Se añadieron el
+identificador de la reserva y el rechazo de una clave repetida en el gestor,
+porque la lista no podía evitar duplicados sin esa clave. Cancelar una reserva
+ya cancelada también queda rechazado. No se cambió el orden de estados que ella
+definió. Siguen pendientes la disponibilidad al confirmar, los parámetros, el
+costo guardado en la reserva y la política de ocupación.
+
+Archivos modificados: se retiró la carpeta `Programacion Fase 4`. Se añadieron
+las tres clases organizadas, `pruebas/test_reservas.py`, y se actualizaron
+`README.md`, `colaboracion/INTEGRACION.md` y `colaboracion/PENDIENTES.md`.
+
+Comando o procedimiento de comprobación:
+`python3 -m sistema_fj.demo_integrada` y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- La demo ejecutó 10 operaciones: 5 correctas y 5 rechazadas.
+- Quedaron 5 reservas en memoria, todas en estado `PROCESADA`.
+- Sin cliente: `ValidacionError: Se esperaba un cliente.`
+- Duración `-5` y duración `0`: `ValidacionError` de duración.
+- Procesar sin confirmar: `ReservaError: Solo las reservas confirmadas pueden procesarse.`
+  y el estado sigue en `PENDIENTE`.
+- Una confirmación repetida no cambia `CONFIRMADA`. Cancelar una procesada no
+  cambia `PROCESADA`. Un identificador repetido no aumenta la lista.
+- Las 33 pruebas terminaron OK: 27 de clientes y servicios, y 6 de reservas.
+
+Commit: [fde0f70](https://github.com/mariana-inco/software-fj-fase4/commit/fde0f70).
+
+Pendientes y siguiente paso: validar disponibilidad y parámetros al confirmar,
+guardar el costo de la reserva y acordar la política de ocupación.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
