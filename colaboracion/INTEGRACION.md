@@ -85,11 +85,10 @@ operación fallida debe conservar el estado anterior. El enunciado no fija estos
 nombres ni su orden: documentar el diseño que finalmente acuerden.
 
 Las reservas se conservan en una lista interna, con identificadores únicos.
-Como el anexo no define fechas ni horarios, se puede acordar un modelo sencillo
-de ocupación simultánea: las confirmadas retienen recursos hasta procesarse o
-cancelarse. En ese modelo, salas y asesores aceptan una reserva activa; equipos
-no pueden superar su stock acumulado. También puede elegirse un calendario,
-pero la política debe ser explícita, probada y coherente en todas las transiciones.
+Como el anexo no define fechas ni horarios, la ocupación es esta: una reserva
+confirmada retiene el servicio hasta procesarse o cancelarse. Una sala o una
+asesoría admite una sola reserva confirmada. En equipos, la suma de unidades
+confirmadas no puede superar el stock. Una pendiente no ocupa cupo.
 
 Reutilizar `ReservaError`, `ValidacionError` y
 `ServicioNoDisponibleError`; todas derivan de `ErrorSoftwareFJ` y se registran

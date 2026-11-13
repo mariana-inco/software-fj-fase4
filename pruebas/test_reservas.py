@@ -3,13 +3,15 @@
 import io  # Captura la demo sin llenar la consola.
 import unittest  # Ejecuta las pruebas con la biblioteca estándar.
 from contextlib import redirect_stdout  # Aísla la salida de la simulación.
+from decimal import Decimal  # Compara el costo sin tolerancia de punto flotante.
 
 from sistema_fj.cliente import Cliente  # Cliente real del proyecto.
-from sistema_fj.demo_integrada import main  # Recorrido de diez operaciones.
-from sistema_fj.excepciones import DuplicadoError, ReservaError, ValidacionError  # Errores esperados.
-from sistema_fj.gestor_reservas import GestorReservas  # Lista interna.
+from sistema_fj.demo_integrada import main  # Recorrido completo.
+from sistema_fj.excepciones import DuplicadoError, ReservaError, ServicioNoDisponibleError  # Errores esperados.
+from sistema_fj.excepciones import ValidacionError  # Datos que no se pueden guardar.
+from sistema_fj.gestor_reservas import GestorReservas  # Lista interna y cupo.
 from sistema_fj.reserva import Reserva  # Clase organizada a partir del aporte de la compañera.
-from sistema_fj.servicios import ReservaSala  # Un servicio concreto basta para estos casos.
+from sistema_fj.servicios import AlquilerEquipo, ReservaSala  # Sala y equipo para cupo y costo.
 
 
 class PruebasReservas(unittest.TestCase):
@@ -64,14 +66,49 @@ class PruebasReservas(unittest.TestCase):
         with self.assertRaises(ValidacionError):  # Cero no es una duración.
             Reserva("R2", self.cliente, self.sala, 0)  # Duración inválida.
 
-    def test_demo_de_diez_operaciones(self):
-        """La simulación completa diez operaciones y guarda solo las cinco válidas."""
+    def test_costo_capacidad_disponibilidad_y_cupo(self):
+        """El costo queda guardado, y un rechazo de cupo o de disponibilidad no confirma."""
+        reserva = Reserva("R1", self.cliente, self.sala, 2, impuesto="0.19", personas=4)  # Cuatro personas, dos horas.
+        self.assertEqual(reserva.costo, Decimal("119000.00"))  # 50000 × 2 × 1.19. Las personas no cambian el precio.
+        with self.assertRaises(ValidacionError):  # Once personas superan la capacidad.
+            Reserva("R2", self.cliente, self.sala, 1, personas=11)  # No llega a crearse.
+        self.gestor.agregar_reserva(reserva)  # Entra pendiente.
+        self.gestor.confirmar(reserva)  # Ocupa la sala.
+        otra = Reserva("R3", self.cliente, self.sala, 1)  # Otra reserva de la misma sala.
+        self.gestor.agregar_reserva(otra)  # Puede existir pendiente.
+        with self.assertRaises(ReservaError):  # La sala ya tiene una confirmada.
+            self.gestor.confirmar(otra)  # No debe ocupar la sala.
+        self.assertEqual(otra.estado, "PENDIENTE")  # El rechazo no la confirma.
+        self.assertEqual(reserva.estado, "CONFIRMADA")  # La primera sigue ocupando la sala.
+        reserva.cancelar()  # Liberar permite confirmar la otra.
+        self.gestor.confirmar(otra)  # Ahora sí hay cupo.
+        self.assertEqual(otra.estado, "CONFIRMADA")  # Quedó confirmada después de liberar.
+
+        equipo = AlquilerEquipo("E1", "Portatil", "10000", 3)  # Stock de tres unidades.
+        primera = Reserva("E-R1", self.cliente, equipo, 1, unidades=2)  # Pide dos.
+        segunda = Reserva("E-R2", self.cliente, equipo, 1, unidades=2)  # Otras dos no caben junto a las primeras.
+        self.gestor.agregar_reserva(primera)  # Guarda la primera.
+        self.gestor.confirmar(primera)  # Ocupa dos unidades.
+        self.gestor.agregar_reserva(segunda)  # La segunda espera.
+        with self.assertRaises(ReservaError):  # 2 + 2 superan las 3 disponibles.
+            self.gestor.confirmar(segunda)  # No confirma y no descuenta de más.
+        self.assertEqual(segunda.estado, "PENDIENTE")  # Sigue pendiente.
+        primera.procesar()  # Procesar libera las unidades.
+        equipo.disponible = False  # El equipo sale de servicio.
+        with self.assertRaises(ServicioNoDisponibleError):  # No se confirma apagado.
+            self.gestor.confirmar(segunda)  # Hay stock, pero el servicio está apagado.
+        self.assertEqual(segunda.estado, "PENDIENTE")  # El estado anterior se conserva.
+
+    def test_demo_completa(self):
+        """La simulación recorre 12 operaciones y confirma una reserva después de los errores."""
         salida = io.StringIO()  # Guarda el texto de la demo.
         with redirect_stdout(salida):  # No mezcla la demo con el resultado de la prueba.
-            gestor = main()  # Ejecuta las diez operaciones.
-        self.assertIn("10 ejecutadas", salida.getvalue())  # Ningún error detuvo el recorrido.
-        self.assertEqual(len(gestor.listar_reservas()), 5)  # Solo las procesadas quedan guardadas.
-        self.assertTrue(all(reserva.estado == "PROCESADA" for reserva in gestor.listar_reservas()))  # Las cinco cerraron.
+            gestor = main()  # Ejecuta clientes, servicios y reservas.
+        self.assertIn("6 correctas, 6 rechazadas, 12 ejecutadas", salida.getvalue())  # El recorrido no se detuvo.
+        estados = {reserva.identificador: reserva.estado for reserva in gestor.listar_reservas()}  # Resultado final.
+        self.assertEqual(estados["R001"], "CANCELADA")  # La primera sala se liberó.
+        self.assertEqual(estados["R003"], "CONFIRMADA")  # Esta se confirmó después de los errores.
+        self.assertEqual(estados["R005"], "PENDIENTE")  # El equipo apagado no llegó a confirmarse.
 
 
 if __name__ == "__main__":  # Permite ejecutar solo este archivo.

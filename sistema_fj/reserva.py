@@ -18,8 +18,9 @@ class Reserva:
 
     ESTADOS_VALIDOS = ("PENDIENTE", "CONFIRMADA", "CANCELADA", "PROCESADA")  # Estados de la clase original.
 
-    def __init__(self, identificador=None, cliente=None, servicio=None, duracion=None):
-        """Valida los datos y deja la reserva en estado PENDIENTE."""
+    def __init__(self, identificador=None, cliente=None, servicio=None, duracion=None,
+                 impuesto=0, descuento=0, **parametros):
+        """Valida los datos, calcula el costo y deja la reserva en PENDIENTE."""
         self.__identificador = texto(identificador, "Identificador")  # Clave interna, sin documentos reales.
         if not isinstance(cliente, Cliente):  # Rechaza nulos y objetos de otro tipo.
             raise ValidacionError("Se esperaba un cliente.")  # No guarda una reserva incompleta.
@@ -28,7 +29,10 @@ class Reserva:
         self.__cliente = cliente  # Conserva el cliente ya validado.
         self.__servicio = servicio  # Conserva el servicio ya validado.
         self.__duracion = numero(duracion, "Duración")  # Exige una duración positiva; admite horas fraccionarias.
-        self.__estado = "PENDIENTE"  # Toda reserva nueva espera confirmación.
+        self.__parametros = servicio.validar_parametros(**parametros)  # Personas, unidades o tema, según el servicio.
+        self.__costo = servicio.calcular_costo(  # El costo queda fijo desde la creación.
+            self.__duracion, impuesto, descuento, **self.__parametros)
+        self.__estado = "PENDIENTE"  # Confirmar es lo que ocupa el servicio.
         self.__fecha_creacion = datetime.now()  # Momento de creación, solo en memoria.
         logger.info("Reserva creada: %s", self.__identificador)  # Registra la clave, no el nombre del cliente.
 
@@ -62,12 +66,24 @@ class Reserva:
         """Devuelve el momento en que se creó la reserva."""
         return self.__fecha_creacion  # No se usa como calendario de ocupación.
 
+    @property  # Personas, unidades o tema ya validados.
+    def parametros(self):
+        """Devuelve los parámetros propios del servicio."""
+        return dict(self.__parametros)  # Una copia: quien llama no cambia los guardados.
+
+    @property  # El importe no se recalcula al confirmar ni al cancelar.
+    def costo(self):
+        """Devuelve el costo calculado al crear la reserva."""
+        return self.__costo  # Decimal con dos decimales.
+
     def confirmar(self):
-        """Pasa de PENDIENTE a CONFIRMADA. Otro estado se rechaza."""
+        """Pasa de PENDIENTE a CONFIRMADA si el servicio sigue disponible."""
         if self.__estado != "PENDIENTE":  # Evita confirmar dos veces o revivir una reserva cerrada.
             raise ReservaError(f"No se puede confirmar una reserva en estado {self.__estado}.")  # Conserva el estado.
-        self.__estado = "CONFIRMADA"  # Solo se actualiza si la transición es válida.
+        self.__servicio.validar_parametros(**self.__parametros)  # Rechaza un servicio apagado o un cupo inválido.
+        self.__estado = "CONFIRMADA"  # El estado cambia solo después de validar.
         logger.info("Reserva confirmada: %s", self.__identificador)  # Deja constancia del cambio.
+        return self  # Permite mostrar la reserva ya confirmada.
 
     def cancelar(self):
         """Cancela una reserva pendiente o confirmada. Una procesada no se cancela."""
@@ -77,15 +93,18 @@ class Reserva:
             raise ReservaError("No se puede cancelar una reserva ya cancelada.")  # Sigue cancelada.
         self.__estado = "CANCELADA"  # Pendiente y confirmada sí pueden cancelarse.
         logger.info("Reserva cancelada: %s", self.__identificador)  # Registra la cancelación.
+        return self  # Permite mostrar la reserva ya cancelada.
 
     def procesar(self):
         """Pasa de CONFIRMADA a PROCESADA. Sin confirmación previa se rechaza."""
         if self.__estado != "CONFIRMADA":  # No procesa pendientes, canceladas ni procesadas.
             raise ReservaError("Solo las reservas confirmadas pueden procesarse.")  # Conserva el estado anterior.
-        self.__estado = "PROCESADA"  # Cierra la operación.
+        self.__estado = "PROCESADA"  # Cierra la operación y libera el cupo.
         logger.info("Reserva procesada: %s", self.__identificador)  # Registra el cierre.
+        return self  # Permite mostrar la reserva ya procesada.
 
     def describir(self):
         """Resume la reserva sin mostrar correo ni teléfono."""
         return (f"Reserva {self.__identificador}: cliente {self.__cliente.identificador}, "
-                f"servicio {self.__servicio.identificador}, {self.__duracion} h, {self.__estado}")  # Texto de consola.
+                f"servicio {self.__servicio.identificador}, {self.__duracion} h, "
+                f"costo {self.__costo}, {self.__estado}")  # Texto de consola.

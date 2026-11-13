@@ -2,8 +2,8 @@
 
 Proyecto académico de gestión de clientes, servicios y reservas, sin base de datos.
 El aporte de clientes y servicios está en `sistema_fj`. La clase `Reserva`,
-el gestor y una simulación de 10 operaciones quedaron organizados en ese mismo
-paquete a partir de los archivos que subió Marianita82J-m.
+el gestor y la simulación completa quedaron en ese mismo paquete. Los estados
+salen de los archivos que subió Marianita82J-m.
 
 ## Ejecutar
 
@@ -19,8 +19,9 @@ En Windows puede utilizarse `py` en lugar de `python3`. Solo se usa la bibliotec
 estándar; no hay paquetes que instalar. Validado localmente con Python 3.14.7.
 
 `demo_base` recorre 16 casos de clientes y servicios: 7 aceptados y 9 rechazados.
-`demo_integrada` recorre 10 operaciones de reserva: 5 procesadas y 5 rechazadas.
-Los rechazos son intencionales y el recorrido sigue después de cada error.
+`demo_integrada` es el recorrido completo: 12 operaciones, 6 aceptadas y 6
+rechazadas. Incluye clientes y servicios válidos e inválidos, reservas exitosas
+y fallidas, y una confirmación correcta después de los errores.
 
 El registro se crea en `registros/sistema_fj.log`. Si no se puede abrir el archivo,
 se informa la causa y se registra en consola. Los datos de clientes y servicios
@@ -61,7 +62,7 @@ trabajo real. No se deben atribuir aportes a personas que no los han realizado.
 - `sistema_fj/gestor_reservas.py`: lista interna de reservas, sin identificadores repetidos.
 - `sistema_fj/demo_integrada.py`: 10 operaciones de reserva, con aciertos y rechazos.
 - `pruebas/test_base.py`: 27 pruebas de clientes y servicios.
-- `pruebas/test_reservas.py`: pruebas de estados, duplicados y de la demo integrada.
+- `pruebas/test_reservas.py`: estados, duplicados, costo, capacidad, disponibilidad, cupo y la demo completa.
 - `colaboracion/INTEGRACION.md`: interfaz que utilizará la compañera.
 - [Pendientes](colaboracion/PENDIENTES.md): actividades propuestas hasta la entrega.
 - [Bitácora](colaboracion/SEGUIMIENTO.md): avances realizados y evidencias verificables.
@@ -95,9 +96,11 @@ El correo usa una validación básica de formato; no se consulta la existencia d
 buzón. El teléfono admite de 7 a 15 dígitos ASCII y `+` inicial opcional. Los
 identificadores son internos y no corresponden a documentos reales.
 
-La disponibilidad actual es general (`True`/`False`). El calendario, el inventario
-ocupado y las restricciones entre reservas no están implementados. Al integrar,
-debe definirse y documentarse una política consistente para evitar sobreasignación.
+La disponibilidad general sigue siendo `True` o `False`, sin calendario por horas.
+Una reserva confirmada ocupa el servicio hasta que se cancela o se procesa.
+Una sala o una asesoría admite una sola reserva confirmada a la vez. En equipos,
+la suma de unidades confirmadas no puede pasar el stock. Una reserva pendiente
+todavía no ocupa cupo.
 
 ## Dónde se evidencia el manejo de excepciones
 
@@ -121,11 +124,6 @@ La distribución por días está en [PENDIENTES.md](colaboracion/PENDIENTES.md).
 Registrar cada actividad realizada en la [bitácora](colaboracion/SEGUIMIENTO.md)
 y cerrar las casillas únicamente cuando se haya comprobado el resultado.
 
-- Completar en `Reserva` la validación de disponibilidad y parámetros al confirmar,
-  el costo de la reserva y la política de ocupación. La confirmación, la cancelación
-  y el procesamiento básicos ya están organizados.
-- La demo integrada ya recorre 10 operaciones de reserva. Falta ampliarla con
-  clientes y servicios inválidos dentro de ese mismo recorrido, si el grupo lo acuerda.
 - Mantener los datos del negocio en listas y usar archivos únicamente para eventos y errores.
 - Compartir en el foro el enlace de GitHub y comprobar que el tutor tenga acceso.
 - Elaborar un único PDF con portada, introducción, enlace al repositorio,
