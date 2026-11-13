@@ -377,6 +377,48 @@ Commit: [fde0f70](https://github.com/mariana-inco/software-fj-fase4/commit/fde0f
 Pendientes y siguiente paso: validar disponibilidad y parámetros al confirmar,
 guardar el costo de la reserva y acordar la política de ocupación.
 
+## 13 de noviembre de 2026 — cerrar cupo, costo y simulación completa
+
+Fecha real: 13 de noviembre de 2026, mañana, hora de Colombia.
+Participante: Mariana Gomez, `mariana-inco`.
+Actividad: terminar el desarrollo que faltaba en la reserva, con código sencillo.
+Los estados siguen siendo los que subió Marianita82J-m.
+
+Qué se hizo: al crear una reserva se validan los parámetros del servicio y se
+guarda el costo. Confirmar vuelve a revisar la disponibilidad. El gestor no
+confirma si la sala o la asesoría ya tienen otra reserva confirmada, ni si las
+unidades del equipo pasan el stock. Cancelar o procesar libera ese cupo porque
+la reserva deja de estar confirmada. Un rechazo no cambia el estado. La demo
+integrada ahora recorre 12 operaciones: clientes y servicios válidos e inválidos,
+reservas aceptadas y rechazadas, y una confirmación correcta al final.
+
+Archivos modificados: `sistema_fj/reserva.py`, `sistema_fj/gestor_reservas.py`,
+`sistema_fj/demo_integrada.py`, `pruebas/test_reservas.py`, `README.md`,
+`colaboracion/INTEGRACION.md` y `colaboracion/PENDIENTES.md`.
+
+Comando o procedimiento de comprobación:
+`python3 -m sistema_fj.demo_integrada` y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Sala de dos horas, tarifa 50000: costo `100000.00`, estado `CONFIRMADA`.
+- Once personas: `ValidacionError: Personas: se supera la capacidad de la sala.`
+- Segunda sala mientras la primera sigue confirmada:
+  `ReservaError: El servicio ya tiene una reserva confirmada.`
+- Equipo apagado: `ServicioNoDisponibleError: El servicio está deshabilitado.`
+  La reserva `R005` sigue `PENDIENTE`.
+- Después de cancelar `R001`, la operación 12 confirma `R003`.
+- Resumen: `6 correctas, 6 rechazadas, 12 ejecutadas`. Reservas en memoria: 3.
+- En la prueba, una sala de dos horas con impuesto `0.19` cuesta `119000.00`.
+  Dos equipos de 2 unidades no caben en un stock de 3, y la segunda sigue pendiente.
+- Las 34 pruebas terminaron OK.
+
+Commit: [288e10c](https://github.com/mariana-inco/software-fj-fase4/commit/288e10c).
+
+Pendientes y siguiente paso: el PDF grupal, el enlace en el foro y la prueba de
+clonar el repositorio en otra carpeta. El código del sistema ya recorre el anexo.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No

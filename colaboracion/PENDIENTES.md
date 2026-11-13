@@ -35,7 +35,10 @@ explicaciones o correcciones concretas.
 
 ## 12 de noviembre — confirmación y revisión de servicios
 
-- [ ] Compañera: implementar confirmación con validación de disponibilidad y parámetros.
+- [x] Compañera: implementar confirmación con validación de disponibilidad y parámetros.
+  La confirmación básica venía en su archivo. La validación de disponibilidad,
+  parámetros, costo y cupo quedó cerrada el 13 de noviembre. La evidencia está
+  en la bitácora.
 - [x] Mariana: comprobar una cotización de cada tipo de servicio y explicar el polimorfismo.
   Hecho el 10 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: commit de confirmación y resultados concretos de las cotizaciones.
@@ -65,9 +68,10 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 
 ## 13 de noviembre — cancelación y límites
 
-- [ ] Compañera: completar el rechazo de transiciones. Ya subió confirmar, cancelar
+- [x] Compañera: completar el rechazo de transiciones. Ya subió confirmar, cancelar
   y procesar. Al organizar el código se rechazó también cancelar una reserva ya
-  cancelada. Sigue pendiente validar disponibilidad y parámetros al confirmar.
+  cancelada. La disponibilidad y el cupo al confirmar quedaron cerrados el 13
+  de noviembre. La evidencia está en la bitácora.
 - [x] Mariana: organizar los archivos de Reserva, el gestor y la simulación que
   subió la compañera, y conectarlos con los clientes y servicios existentes.
   Hecho el 13 de noviembre. La evidencia está en la bitácora.
@@ -77,31 +81,42 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 
 ## 14 de noviembre — procesamiento y excepciones
 
-- [ ] Compañera: implementar procesamiento y conservación del estado ante un fallo.
+- [x] Compañera: implementar procesamiento y conservación del estado ante un fallo.
+  Procesar sin confirmar deja la reserva en PENDIENTE. Comprobado el 13 de noviembre.
 - [x] Mariana: seguir un error de conversión, su causa encadenada y su registro.
   Hecho el 11 de noviembre, antes de la fecha prevista. La evidencia está en la bitácora.
 - Evidencia esperada: procesamiento comprobado y explicación del error observado.
 
 ## 15 de noviembre — lista de reservas e integración inicial
 
-- [ ] Compañera: implementar la lista de reservas y evitar identificadores duplicados.
+- [x] Compañera: implementar la lista de reservas y evitar identificadores duplicados.
+  La lista venía en su gestor. El rechazo de claves repetidas quedó al organizar
+  el archivo, el 13 de noviembre.
 - [x] Ambas: conectar Reserva con los clientes y servicios existentes.
   Hecho el 13 de noviembre, al organizar el aporte de Marianita82J-m. La política
   de ocupación sigue pendiente. La evidencia está en la bitácora.
-- [ ] Ambas: verificar la política de ocupación y liberación de recursos que acordaron.
+- [x] Ambas: verificar la política de ocupación y liberación de recursos que acordaron.
+  Hecho el 13 de noviembre: una sala o asesoría confirmada a la vez; el equipo no
+  pasa el stock; cancelar o procesar libera el cupo. La evidencia está en la bitácora.
 - Evidencia esperada: una reserva integrada que complete su ciclo y pruebas de recursos.
 
 ## 16 de noviembre — simulación completa
 
-- [ ] Compañera: preparar al menos 10 operaciones del sistema integrado con éxitos y rechazos.
-- [ ] Mariana: revisar que incluyan clientes, servicios y reservas válidos e inválidos.
-- [ ] Ambas: comprobar una operación exitosa después de los errores.
+- [x] Compañera: preparar al menos 10 operaciones del sistema integrado con éxitos y rechazos.
+  El recorrido completo quedó en `demo_integrada`: 12 operaciones, el 13 de noviembre.
+- [x] Mariana: revisar que incluyan clientes, servicios y reservas válidos e inválidos.
+  Hecho el 13 de noviembre. La evidencia está en la bitácora.
+- [x] Ambas: comprobar una operación exitosa después de los errores.
+  La operación 12 confirma la sala pendiente después de los rechazos.
 - Evidencia esperada: comando real de ejecución, resumen de operaciones y errores controlados.
 
 ## 17 de noviembre — pruebas de reservas
 
-- [ ] Compañera: completar pruebas de estados, duplicados, capacidad, disponibilidad y costos.
-- [ ] Ambas: ejecutar todas las pruebas y corregir únicamente los problemas detectados.
+- [x] Compañera: completar pruebas de estados, duplicados, capacidad, disponibilidad y costos.
+  Las de estados y duplicados ya estaban. Capacidad, disponibilidad, cupo y costo
+  se comprobaron el 13 de noviembre.
+- [x] Ambas: ejecutar todas las pruebas y corregir únicamente los problemas detectados.
+  El 13 de noviembre las 34 pruebas terminaron OK.
 - Evidencia esperada: resultado real de las pruebas y commits de correcciones, si hacen falta.
 
 ## 18 de noviembre — revisar requisitos y documentación
