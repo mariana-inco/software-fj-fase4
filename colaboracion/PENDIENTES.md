@@ -103,7 +103,8 @@ noviembre para adelantar comprobaciones del aporte de Mariana.
 ## 16 de noviembre — simulación completa
 
 - [x] Compañera: preparar al menos 10 operaciones del sistema integrado con éxitos y rechazos.
-  El recorrido completo quedó en `demo_integrada`: 12 operaciones, el 13 de noviembre.
+  El recorrido completo quedó en `demo_integrada`: 15 operaciones, con los tres
+  servicios, el 13 de noviembre.
 - [x] Mariana: revisar que incluyan clientes, servicios y reservas válidos e inválidos.
   Hecho el 13 de noviembre. La evidencia está en la bitácora.
 - [x] Ambas: comprobar una operación exitosa después de los errores.

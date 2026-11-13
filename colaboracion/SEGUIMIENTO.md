@@ -419,6 +419,36 @@ Commit: [288e10c](https://github.com/mariana-inco/software-fj-fase4/commit/288e1
 Pendientes y siguiente paso: el PDF grupal, el enlace en el foro y la prueba de
 clonar el repositorio en otra carpeta. El código del sistema ya recorre el anexo.
 
+## 13 de noviembre de 2026 — incluir la asesoría en la simulación
+
+Fecha real: 13 de noviembre de 2026, después de las 12:30, hora de Colombia.
+Participante: Mariana Gomez, `mariana-inco`.
+Actividad: completar el recorrido de reservas para que use los tres servicios
+que ya estaban en la simulación original de Marianita82J-m.
+
+Qué se hizo: se agregó una asesoría válida, el rechazo de una asesoría sin
+especialidad y una reserva confirmada de esa asesoría. El acierto final, después
+de los errores, sigue siendo la sala que estaba pendiente.
+
+Archivos modificados: `sistema_fj/demo_integrada.py`, `pruebas/test_reservas.py`,
+`README.md` y `colaboracion/PENDIENTES.md`.
+
+Comando: `python3 -m sistema_fj.demo_integrada` y
+`python3 -m unittest discover -s pruebas -v`.
+
+Resultado observado:
+
+- Resumen: `8 correctas, 7 rechazadas, 15 ejecutadas`.
+- La asesoría de una hora costó `80000.00` y la reserva `R006` quedó `CONFIRMADA`.
+- Una asesoría sin especialidad lanzó `ValidacionError`.
+- Quedaron 4 reservas en memoria.
+- Las 34 pruebas terminaron OK.
+
+Commit: [9a28ee4](https://github.com/mariana-inco/software-fj-fase4/commit/9a28ee4).
+
+Pendientes y siguiente paso: el PDF lo elabora la compañera. El enlace del foro
+y la prueba de clonar el repositorio siguen pendientes.
+
 ## Plantilla para una nueva entrada
 
 Copiar el siguiente bloque únicamente después de realizar una actividad. No
